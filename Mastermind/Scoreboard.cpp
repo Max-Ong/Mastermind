@@ -6,5 +6,5 @@ int main() {
 	cout << 1 + 2;
 	cout << "love max";
 	cout << "reee";
-
+	cout << "<3";
 }
