@@ -8,4 +8,5 @@ int main() {
 	cout << "love max";
 	cout << "reee";
 	cout << "<3";
+	cout << "aids";
 }
