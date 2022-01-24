@@ -3,4 +3,11 @@ Mastermind/Mastermind.sln
 Mastermind/Mastermind.vcxproj
 Mastermind/Mastermind.vcxproj.filters
 Mastermind/Mastermind.vcxproj.user
+<<<<<<< Updated upstream
 Mastermind/Debug
+=======
+Mastermind/Debug
+.vs/Mastermind/v15
+Debug
+.gitattributes
+>>>>>>> Stashed changes
