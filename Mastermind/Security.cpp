@@ -15,198 +15,174 @@ void removeAccount(string user);
 string securityencoder(string user);
 string securitypass(string user);
 int passencoder(char subpass);
-char passdecoder(int h);
+string pinencoder(string pass);
+void changePassword(string user);
 
-int main() 
+int main()
 {
 	int x;
 	string choice, user;
 
-	cout << "=========== Security Menu ===========" << endl << endl;
 
-Choices:
-	cout << "1. Sign In." << endl
-		<< "2. Create account." << endl
-		<< "3. Remove account." << endl << endl
-		<< "Please Enter your choice to continue: ";
-	cin >> choice;
-
-	system("CLS");
-	cout << "=========== Security Menu ===========" << endl << endl;
-
-	if (choice == "1") 
-	{
-	Protocall:
-		cout << "Please enter the username and password for the account you wish to access." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cin >> user;
-
-		if (user == "0")
-		{
-			system("CLS");
-			cout << "=========== Security Menu ===========" << endl << endl;
-			goto Choices;
-		}
-
-		else
-		{
-			x = accessAccount(user);
-		}
-	}
-
-	else if (choice == "2")
-	{
-	Creative:
-		cout << "Please enter the username and password for your new account." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cin >> user;
-
-		if (user == "0")
-		{
-			system("CLS");
-			cout << "=========== Security Menu ===========" << endl << endl;
-			goto Choices;
-		}
-
-		else
-		{
-			x = createAccount(user);
-		}
-	}
-
-	else if (choice == "3")
-	{
-		cout << "Please enter the username and password for the account that you wish to remove." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cin >> user;
-
-		if (user == "0") 
-		{
-			system("CLS");
-			cout << "=========== Security Menu ===========" << endl << endl;
-			goto Choices;
-		}
-
-		else
-		{
-			removeAccount(user);
-			x = 2;
-		}
-	}
-
-	else
-	{
-		cout << "(!) Invalid choice entered, Please enter a valid choice." << endl << endl;
-		goto Choices;
-	}
-
-	system("CLS");
-	cout << "=========== Security Menu ===========" << endl << endl;
-
-	if (x == 0)
-	{
-		cout << "Access Granted. Welcome " << user << "." << endl;
-		Sleep(8000);
-		system("CLS");
-		goto Programs;
-	}
-
-	else if (x == 1) 
-	{
-		cout << "(!) Access Denied. Please try again." << endl << endl;
-		goto Protocall;
-	}
-
-	else if (x==2)
-	{
-		goto Choices;
-	}
-
-	else if (x == 3)
-	{
-		cout << "(!) This username has already been taken. Please use a different username." << endl << endl;
-		goto Creative;
-	}
-
-Programs:
-
-	system("pause");
-	return 0;
-}
-
-/*----------------------------------------------------------------------------------------------------------------------------------------------*/
-
-int accessAccount(string user)
-{
 	ifstream Secure("Security_Primer.txt");
-	string apass, pass;
-
-	if (!Secure)
-	{
-		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;	
-		system("pause");
-		return 2;
-	}
-
-	else
-	{
-		Secure.close();
-		cout << "Password: ";
-
-		char ch;
-		ch = _getch();
-		while (ch != 13)
-		{
-			pass.push_back(ch);
-			cout << '*';
-			ch = _getch();
-		}
-		cout << endl;
-
-		system("CLS");
-		cout << "=========== Security Menu ===========" << endl << endl;
-
-		apass = securitypass(user);
-
-		if (pass == "0" || apass == "0")
-		{
-			return 2;
-		}
-
-		else if (pass == apass)
-		{
-			return 0;
-		}
-
-		else
-		{
-			cout << "(!) Access Denied. Please try again." << endl << endl;
-			return 1;
-		}
-	}
-}
-
-int createAccount(string user)
-{
-	ofstream Worker("temp.txt", ofstream::app);
-	ifstream Secure("Security_Primer.txt"), Readout("Security_Primer.txt");
-	string apass, pass, auser, y, work;
-	int h;
 
 	if (!Secure)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		system("pause");
+		exit(0);
+	}
 
+	else {
 		Secure.close();
-		Worker.close();
-		Readout.close();
-		remove("temp.txt");
 
+		cout << "============ Security Menu ============" << endl << endl;
+
+	Choices:
+		cout << "1. Sign In." << endl
+			<< "2. Create account." << endl
+			<< "3. Remove account." << endl
+			<< "4. Change password." << endl << endl
+			<< "Please Enter your choice to continue: ";
+		cin >> choice;
+
+		system("CLS");
+		cout << "============ Security Menu ============" << endl << endl;
+
+		if (choice == "1")
+		{
+		Protocall:
+			cout << "Please enter the username and password for the account you wish to access." << endl
+				<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+				<< "Username: ";
+			cin >> user;
+
+			if (user == "0")
+			{
+				system("CLS");
+				cout << "============ Security Menu ============" << endl << endl;
+				goto Choices;
+			}
+
+			else
+			{
+				x = accessAccount(user);
+			}
+		}
+
+		else if (choice == "2")
+		{
+		Creative:
+			cout << "Please enter the username and password for your new account." << endl
+				<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+				<< "Username: ";
+			cin >> user;
+
+			if (user == "0")
+			{
+				system("CLS");
+				cout << "============ Security Menu ============" << endl << endl;
+				goto Choices;
+			}
+
+			else
+			{
+				x = createAccount(user);
+			}
+		}
+
+		else if (choice == "3")
+		{
+			cout << "Please enter the username and password for the account that you wish to remove." << endl
+				<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+				<< "Username: ";
+			cin >> user;
+
+			if (user == "0")
+			{
+				system("CLS");
+				cout << "============ Security Menu ============" << endl << endl;
+				goto Choices;
+			}
+
+			else
+			{
+				removeAccount(user);
+				x = 2;
+			}
+		}
+
+		else if (choice == "4")
+		{
+			cout << "Please enter the username and password for the account you wish to change the password of." << endl
+				<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+				<< "Username: ";
+			cin >> user;
+
+			if (user == "0")
+			{
+				system("CLS");
+				cout << "============ Security Menu ============" << endl << endl;
+				goto Choices;
+			}
+
+			else
+			{
+				changePassword(user);
+				x = 2;
+			}
+		}
+		else
+		{
+			cout << "(!) Invalid choice entered, Please enter a valid choice." << endl << endl;
+			goto Choices;
+		}
+
+		system("CLS");
+		cout << "============ Security Menu ============" << endl << endl;
+
+		if (x == 0)
+		{
+			cout << "Access Granted. Welcome " << user << "." << endl;
+			Sleep(4000);
+			system("CLS");
+			goto Programs;
+		}
+
+		else if (x == 1)
+		{
+			cout << "(!) Access Denied. Please try again." << endl << endl;
+			goto Protocall;
+		}
+
+		else if (x == 2)
+		{
+			goto Choices;
+		}
+
+		else if (x == 3)
+		{
+			cout << "(!) This username has already been taken. Please use a different username." << endl << endl;
+			goto Creative;
+		}
+
+	Programs:
 		return 0;
+	}
+}
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+int createAccount(string user)
+{
+	ofstream Worker("temp.txt", ofstream::app);
+	ifstream Secure("Security_Primer.txt"), Readout("Security_Primer.txt");
+	string x, apass, pass, auser, y, cpass;
+
+	if (!Secure)
+	{
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		system("pause");
+		goto Leave;
 	}
 
 	else if (!Worker)
@@ -214,23 +190,18 @@ int createAccount(string user)
 		cout << "(!) Error: (temp.txt) cannot be created." << endl;
 		system("pause");
 
-		Secure.close();
-		Worker.close();
-		Readout.close();
-		remove("temp.txt");
-
-		return 0;
+		goto Leave;
 	}
 
-	else 
+	else
 	{
 		auser = securityencoder(user);
 
 		while (y != auser && !Secure.eof())
 		{
-			Secure >> y;
+			Secure >> y >> x;
 
-			if (Secure.fail()) 
+			if (Secure.fail())
 			{
 				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
 				break;
@@ -244,17 +215,64 @@ int createAccount(string user)
 
 			char ch;
 			ch = _getch();
-			while (ch != 13)
+
+			system("CLS");
+			cout << "============ Security Menu ============" << endl << endl;
+			cout << "Please enter the username and password for your new account." << endl
+				<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+				<< "Username: ";
+			cout << user << endl;
+			cout << "Password: ";
+
+		FirstPass:
+			while (ch != 13 && ch != 8)
 			{
 				pass.push_back(ch);
 				cout << '*';
 				ch = _getch();
 			}
 
-			cout << endl;
+			if (ch == 8)
+			{
+				int g = pass.size();
+				if (g != 0)
+				{
+					system("CLS");
+					cout << "============ Security Menu ============" << endl << endl;
+					pass.resize(g - 1);
+
+					cout << "Please enter the username and password for your new account." << endl
+						<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+						<< "Username: ";
+					cout << user << endl << "Password: ";
+					for (int i = 0; i < (g - 1); i++)
+					{
+						cout << '*';
+					}
+					ch = _getch();
+					goto FirstPass;
+				}
+				else 
+				{
+					ch = _getch();
+					goto FirstPass;
+				}
+			}
+
+			else if (ch == 13 && pass == "")
+			{
+				ch = _getch();
+				goto FirstPass;
+			}
+
+			else
+			{
+				cout << endl;
+			}
 
 			if (pass == "0")
 			{
+			Leave:
 				Secure.close();
 				Worker.close();
 				Readout.close();
@@ -265,63 +283,90 @@ int createAccount(string user)
 
 			else
 			{
-				int x;
-				char spass[40];
-				char subpass;
-
-				strncpy_s(spass, pass.c_str(), sizeof(spass));
-				spass[sizeof(spass) - 1] = 0;
-
-				for (x = 0; spass[x] != '\0'; x++) 
-				{
-					subpass = spass[x];
-					h = passencoder(subpass);
-					apass += passdecoder(h);
-				}
 				cout << "Confirm Password: ";
+				
+				char cf = _getch();
 
-				char ch;
-				ch = _getch();
-				while (ch != 13)
+			SecondPass:
+				while (cf != 13 && cf != 8)
 				{
-					pass.push_back(ch);
+					apass.push_back(cf);
 					cout << '*';
-					ch = _getch();
+					cf = _getch();
 				}
 
-				cout << endl;
+				if (cf == 8)
+				{
+					int m = apass.size();
+					if (m != 0)
+					{
+						system("CLS");
+						cout << "============ Security Menu ============" << endl << endl;
+
+						apass.resize(m - 1);
+
+						cout << "Please enter the username and password for your new account." << endl
+							<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+							<< "Username: ";
+						cout << user << endl;
+						cout << "Password: ";
+						int g = pass.size();
+
+						for (int i = 0; i < g; i++)
+						{
+							cout << '*';
+						}
+						cout << endl << "Confirm Password: ";
+
+						for (int i = 0; i < (m - 1); i++)
+						{
+							cout << '*';
+						}
+
+						cf = _getch();
+						goto SecondPass;
+					}
+					else
+					{
+						cf = _getch();
+						goto SecondPass;
+					}
+				}
+
+				else if (cf == 13 && apass == "")
+				{
+					cf = _getch();
+					goto SecondPass;
+				}
+
+				else
+				{
+					cout << endl;
+				}
 
 				system("CLS");
-				cout << "=========== Security Menu ===========" << endl << endl;
+				cout << "============ Security Menu ============" << endl << endl;
 
-				if (pass == "0" || apass == "0")
+				if (apass == "0")
 				{
-					Secure.close();
-					Worker.close();
-					Readout.close();
-					remove("temp.txt");
-					return 2;
+					goto Leave;
 				}
 
 				else if (pass == apass)
 				{
-					for (x = 0; spass[x] != '\0'; x++)
-					{
-						subpass = spass[x];
-						h = passencoder(subpass);
-						work += (" ") + to_string(h);
-					}
+					cpass = pinencoder(pass);
 
 					string line;
+
 					while (getline(Readout, line))
 					{
-						if (line.substr(0, auser.size()) != auser) 
+						if (line.substr(0, auser.size()) != auser)
 						{
 							Worker << line << endl;
 						}
 					}
-					
-					Worker << auser << work;
+
+					Worker << auser << " " << cpass;
 
 					Secure.close();
 					Worker.close();
@@ -339,6 +384,8 @@ int createAccount(string user)
 						<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
 						<< "Username: " << user << endl;
 					cout << endl << "(!) The re-entered password is not the same as created password. Please recreate password." << endl << endl;
+					pass = "";
+					apass = "";
 					goto Password;
 				}
 			}
@@ -359,8 +406,7 @@ int createAccount(string user)
 void removeAccount(string user)
 {
 	int r;
-	string auser;
-	string gone;
+	string auser, gone;
 
 	ifstream Remover("Security_Primer.txt");
 	ofstream Editor("temporary.txt");
@@ -381,10 +427,10 @@ void removeAccount(string user)
 	{
 	RemovalProcess:
 		r = accessAccount(user);
-	
+
 		if (r == 0)
 		{
-			
+
 			auser = securityencoder(user);
 
 			string filer;
@@ -393,7 +439,7 @@ void removeAccount(string user)
 			{
 				if (gone.substr(0, auser.size()) != auser)
 				{
-						filer += gone + '\n';
+					filer += gone + '\n';
 				}
 			}
 
@@ -406,11 +452,9 @@ void removeAccount(string user)
 			remove("Security_Primer.txt");
 			rename("temporary.txt", "Security_Primer.txt");
 
-			cout << "Account (user:  " << user << ") has been removed." << endl;
+			cout << "Account (user:  " << user << ") has been removed." << endl << endl;
 
 			system("pause");
-			system("CLS");
-			cout << "=========== Security Menu ===========" << endl << endl;
 		}
 
 		else if (r == 1)
@@ -422,12 +466,7 @@ void removeAccount(string user)
 
 			if (user == "0")
 			{
-				Remover.close();
-				Editor.close();
-				remove("temporary.txt");
-
-				system("CLS");
-				cout << "=========== Security Menu ===========" << endl << endl;
+				goto Exit;
 			}
 
 			else
@@ -438,45 +477,249 @@ void removeAccount(string user)
 
 		else
 		{
-
+		Exit:
 			Remover.close();
 			Editor.close();
 			remove("temporary.txt");
-
-			system("CLS");
-			cout << "=========== Security Menu ===========" << endl << endl;
 		}
 	}
 }
 
-/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-string securityencoder(string user) //auser contain even number codes
+int accessAccount(string user)
 {
-	string auser;
-	int x;
+	ifstream Secure("Security_Primer.txt");
+	string apass, pass, cpass;
 
-	char userc[50];
-
-	strncpy_s(userc, user.c_str(), sizeof(userc));
-	userc[sizeof(userc) - 1] = 0;
-
-	for (int i = 0; userc[i] != '\0'; i++) 
+	if (!Secure)
 	{
-		x = userc[i] * 2 + 50;
-		auser += to_string(x);
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		system("pause");
+		return 2;
 	}
-	
-	return auser;
+
+	else
+	{
+		Secure.close();
+		cout << "Password: ";
+
+		char ch;
+		ch = _getch();
+
+		system("CLS");
+		cout << "============ Security Menu ============" << endl << endl;
+		cout << "Please enter the username and password for the account you wish to access." << endl
+			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "Username: ";
+		cout << user << endl;
+		cout << "Password: ";
+
+	FirstPass:
+		while (ch != 13 && ch != 8)
+		{
+			pass.push_back(ch);
+			cout << '*';
+			ch = _getch();
+		}
+
+		if (ch == 8)
+		{
+			int g = pass.size();
+			if (g != 0)
+			{
+				system("CLS");
+				cout << "============ Security Menu ============" << endl << endl;
+
+				pass.resize(g - 1);
+
+				cout << "Please enter the username and password for the account you wish to access." << endl
+					<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+					<< "Username: ";
+				cout << user << endl << "Password: ";
+				for (int i = 0; i < (g - 1); i++)
+				{
+					cout << '*';
+				}
+				ch = _getch();
+				goto FirstPass;
+			}
+			else
+			{
+				ch = _getch();
+				goto FirstPass;
+			}
+		}
+
+		else
+		{
+			cout << endl;
+		}
+
+		system("CLS");
+		cout << "============ Security Menu ============" << endl << endl;
+
+		cpass = pinencoder(pass);
+
+		apass = securitypass(user);
+
+		if (pass == "0")
+		{
+			return 2;
+		}
+
+		else if (apass == cpass)
+		{
+			return 0;
+		}
+
+		else
+		{
+			cout << "(!) Access Denied. Please try again." << endl << endl;
+			return 1;
+		}
+	}
 }
+
+void changePassword(string user) 
+{
+	int r;
+	string auser, gone, pass;
+
+	ifstream Remover("Security_Primer.txt");
+	ofstream Editor("temporary.txt", ofstream::app);
+
+	if (!Remover)
+	{
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		system("pause");
+	}
+
+	else if (!Editor)
+	{
+		cout << "(!) Error: (temporary.txt) cannot be created." << endl;
+		system("pause");
+	}
+
+	else
+	{
+	ChangeProcess:
+		r = accessAccount(user);
+
+		if (r == 0)
+		{
+			system("CLS");
+			cout << "============ Security Menu ============" << endl << endl;
+			cout << "User: " << user << "\n\nPlease Enter your new password below.\n\nNew password:";
+
+			char ch;
+			ch = _getch();
+
+		FirstPass:
+			while (ch != 13 && ch != 8)
+			{
+				pass.push_back(ch);
+				cout << '*';
+				ch = _getch();
+			}
+
+			if (ch == 8)
+			{
+				int g = pass.size();
+				if (g != 0)
+				{
+					system("CLS");
+					cout << "============ Security Menu ============" << endl << endl;
+
+					pass.resize(g - 1);
+
+					cout << "User: " << user << "\n\nPlease Enter your new password below.\n\nNew password:";
+
+					for (int i = 0; i < (g - 1); i++)
+					{
+						cout << '*';
+					}
+					ch = _getch();
+					goto FirstPass;
+				}
+				else
+				{
+					ch = _getch();
+					goto FirstPass;
+				}
+			}
+
+			else
+			{
+				cout << endl;
+			}
+			if (pass == "0") 
+			{
+				goto Exit;
+			}
+			string cpass = pinencoder(pass);
+
+			system("CLS");
+			cout << "============ Security Menu ============" << endl << endl;
+
+			auser = securityencoder(user);
+
+			string filer;
+
+			while (getline(Remover, gone))
+			{
+				if (gone.substr(0, auser.size()) != auser)
+				{
+					filer += gone + '\n';
+				}
+			}
+
+			Editor << filer;
+			Editor << auser << " " << cpass;
+
+			Remover.close();
+			Editor.close();
+			remove("Security_Primer.txt");
+			rename("temporary.txt", "Security_Primer.txt");
+
+			cout << "The password for the account (user:  " << user << ") has been changed." << endl << endl;
+
+			system("pause");
+		}
+
+		else if (r == 1)
+		{
+			cout << "Please enter the username and password for the account you wish to change the password of." << endl
+				<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+				<< "Username: ";
+			cin >> user;
+
+			if (user == "0")
+			{
+				goto Exit;
+			}
+
+			else
+			{
+				goto ChangeProcess;
+			}
+		}
+
+		else
+		{
+		Exit:
+			Remover.close();
+			Editor.close();
+			remove("temporary.txt");
+		}
+	}
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 string securitypass(string user)
 {
 	string auser, y;
 	string apass;
-	ifstream Finder;
-
-	Finder.open("Security_Primer.txt");
+	ifstream Finder("Security_Primer.txt");
 
 	if (!Finder)
 	{
@@ -491,7 +734,7 @@ string securitypass(string user)
 
 		while (y != auser && !Finder.eof())
 		{
-			Finder >> y;
+			Finder >> y >> apass;
 
 			if (Finder.fail())
 			{
@@ -502,34 +745,58 @@ string securitypass(string user)
 
 		if (y == auser)
 		{
-			int h;
-
-			while(Finder.peek() != '\n' && Finder.peek() != '\r' && !Finder.eof())
-			{
-				Finder >> h;
-				apass += passdecoder(h);
-			}
-
 			return apass;
 		}
 		else
 		{
-			Finder.close();
-			return "00";
+			return "0";
 		}
 	}
 }
 
-int passencoder(char subpass) 
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+string securityencoder(string user) //auser contain even number codes
+{
+	string auser;
+	int x;
+
+	char userc[50];
+
+	strncpy_s(userc, user.c_str(), sizeof(userc));
+	userc[sizeof(userc) - 1] = 0;
+
+	for (int i = 0; userc[i] != '\0'; i++)
+	{
+		x = userc[i] * 2 + 50;
+		auser += to_string(x);
+	}
+
+	return auser;
+}
+
+string pinencoder(string pass)
+{
+	string cpass;
+	int x, h;
+	char spass[40];
+	char subpass;
+
+	strncpy_s(spass, pass.c_str(), sizeof(spass));
+	spass[sizeof(spass) - 1] = 0;
+
+	for (x = 0; spass[x] != '\0'; x++)
+	{
+		subpass = spass[x];
+		h = passencoder(subpass);
+		cpass += to_string(h);
+	}
+	return cpass;
+}
+
+int passencoder(char subpass)
 {
 	int h;
 	h = subpass * 4 + 359;
 	return h;
-}
-
-char passdecoder(int h) //code contains odd number codes
-{
-	char apass;
-	apass = (h - 359) / 4;
-	return apass;
 }
