@@ -27,156 +27,165 @@ int main()
 
 
 	ifstream Secure("Security_Primer.txt"), nameList("nameList.txt");
-
-	if (!Secure)
+	ofstream Tester("temp.txt");
+	if (!Tester)
+	{
+		cout << "(!) Error: (temp.txt) cannot be created." << endl;
+		system("pause");
+		exit(0);
+	}
+	else if (!Secure)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		remove("temp.txt");
 		system("pause");
 		exit(0);
 	}
 	else if (!nameList)
 	{
 		cout << "(!) Error 101: (nameList.txt) cannot be opened. \n    Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
+		remove("temp.txt");
 		system("pause");
 		exit(0);
 	}
 
-	else {
-		Secure.close();
-		nameList.close();
-		cout << "============ Security Menu ============" << endl << endl;
+	Secure.close();
+	nameList.close();
+	Tester.close();
+	remove("temp.txt");
 
-	Choices:
-		cout << "1. Sign In." << endl
-			<< "2. Create account." << endl
-			<< "3. Remove account." << endl
-			<< "4. Change password." << endl << endl
-			<< "Please Enter your choice to continue: ";
-		cin >> choice;
+	cout << "============ Security Menu ============" << endl << endl;
 
-		system("CLS");
-		cout << "============ Security Menu ============" << endl << endl;
+Choices:
+	cout << "1. Sign In." << endl
+		<< "2. Create account." << endl
+		<< "3. Remove account." << endl
+		<< "4. Change password." << endl << endl
+		<< "Please Enter your choice to continue: ";
+	cin >> choice;
 
-		if (choice == "1")
+	system("CLS");
+	cout << "============ Security Menu ============" << endl << endl;
+
+	if (choice == "1")
+	{
+	Protocall:
+		cout << "Please enter the username and password for the account you wish to access." << endl
+			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "Username: ";
+		cin >> user;
+
+		if (user == "0")
 		{
-		Protocall:
-			cout << "Please enter the username and password for the account you wish to access." << endl
-				<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-				<< "Username: ";
-			cin >> user;
-
-			if (user == "0")
-			{
-				system("CLS");
-				cout << "============ Security Menu ============" << endl << endl;
-				goto Choices;
-			}
-
-			else
-			{
-				x = accessAccount(user);
-			}
+			system("CLS");
+			cout << "============ Security Menu ============" << endl << endl;
+			goto Choices;
 		}
 
-		else if (choice == "2")
-		{
-		Creative:
-			cout << "Please enter the username and password for your new account." << endl
-				<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-				<< "Username: ";
-			cin >> user;
-
-			if (user == "0")
-			{
-				system("CLS");
-				cout << "============ Security Menu ============" << endl << endl;
-				goto Choices;
-			}
-
-			else
-			{
-				x = createAccount(user);
-			}
-		}
-
-		else if (choice == "3")
-		{
-			cout << "Please enter the username and password for the account that you wish to remove." << endl
-				<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-				<< "Username: ";
-			cin >> user;
-
-			if (user == "0")
-			{
-				system("CLS");
-				cout << "============ Security Menu ============" << endl << endl;
-				goto Choices;
-			}
-
-			else
-			{
-				removeAccount(user);
-				x = 2;
-			}
-		}
-
-		else if (choice == "4")
-		{
-			cout << "Please enter the username and password for the account you wish to change the password of." << endl
-				<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-				<< "Username: ";
-			cin >> user;
-
-			if (user == "0")
-			{
-				system("CLS");
-				cout << "============ Security Menu ============" << endl << endl;
-				goto Choices;
-			}
-
-			else
-			{
-				changePassword(user);
-				x = 2;
-			}
-		}
 		else
 		{
-			cout << "(!) Invalid choice entered, Please enter a valid choice." << endl << endl;
-			goto Choices;
+			x = accessAccount(user);
 		}
-
-		system("CLS");
-		cout << "============ Security Menu ============" << endl << endl;
-
-		if (x == 0)
-		{
-			cout << "Access Granted. Welcome " << user << "." << endl;
-			Sleep(4000);
-			system("CLS");
-			goto Programs;
-		}
-
-		else if (x == 1)
-		{
-			cout << "(!) Access Denied. Please try again." << endl << endl;
-			goto Protocall;
-		}
-
-		else if (x == 2)
-		{
-			goto Choices;
-		}
-
-		else if (x == 3)
-		{
-			cout << "(!) This username has already been taken. Please use a different username." << endl << endl;
-			goto Creative;
-		}
-
-	Programs:
-		return 0;
 	}
+
+	else if (choice == "2")
+	{
+	Creative:
+		cout << "Please enter the username and password for your new account." << endl
+			<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "Username: ";
+		cin >> user;
+
+		if (user == "0")
+		{
+			system("CLS");
+			cout << "============ Security Menu ============" << endl << endl;
+			goto Choices;
+		}
+
+		else
+		{
+			x = createAccount(user);
+		}
+	}
+
+	else if (choice == "3")
+	{
+		cout << "Please enter the username and password for the account that you wish to remove." << endl
+			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "Username: ";
+		cin >> user;
+
+		if (user == "0")
+		{
+			system("CLS");
+			cout << "============ Security Menu ============" << endl << endl;
+			goto Choices;
+		}
+
+		else
+		{
+			removeAccount(user);
+			x = 2;
+		}
+	}
+
+	else if (choice == "4")
+	{
+		cout << "Please enter the username and password for the account you wish to change the password of." << endl
+			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "Username: ";
+		cin >> user;
+
+		if (user == "0")
+		{
+			system("CLS");
+			cout << "============ Security Menu ============" << endl << endl;
+			goto Choices;
+		}
+
+		else
+		{
+			changePassword(user);
+			x = 2;
+		}
+	}
+	else
+	{
+		cout << "(!) Invalid choice entered, Please enter a valid choice." << endl << endl;
+		goto Choices;
+	}
+
+	system("CLS");
+	cout << "============ Security Menu ============" << endl << endl;
+
+	if (x == 0)
+	{
+		cout << "Access Granted. Welcome " << user << "." << endl;
+		Sleep(4000);
+		system("CLS");
+		goto Programs;
+	}
+
+	else if (x == 1)
+	{
+		cout << "(!) Access Denied. Please try again." << endl << endl;
+		goto Protocall;
+	}
+
+	else if (x == 2)
+	{
+		goto Choices;
+	}
+
+	else if (x == 3)
+	{
+		cout << "(!) This username has already been taken. Please use a different username." << endl << endl;
+		goto Creative;
+	}
+
+Programs:
+	return 0;
 }
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -186,16 +195,17 @@ int createAccount(string user)
 	ifstream Secure("Security_Primer.txt"), Readout("Security_Primer.txt");
 	string x, apass, pass, auser, y, cpass;
 
-	if (!Secure)
+	if (!Worker)
 	{
-		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		cout << "(!) Error: (temp.txt) cannot be created." << endl;
 		system("pause");
 		exit(0);
 	}
 
-	else if (!Worker)
+	else if (!Secure)
 	{
-		cout << "(!) Error: (temp.txt) cannot be created." << endl;
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		remove("temp.txt");
 		system("pause");
 		exit(0);
 	}
@@ -211,6 +221,7 @@ int createAccount(string user)
 			if (Secure.fail())
 			{
 				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
+				remove("temp.txt");
 				system("pause");
 				exit(0);
 			}
@@ -370,8 +381,8 @@ int createAccount(string user)
 						if (Readout.fail())
 						{
 							cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
-							system("pause");
 							remove("temp.txt");
+							system("pause");
 							exit(0);
 						}
 
@@ -429,16 +440,17 @@ void removeAccount(string user)
 	ifstream Remover("Security_Primer.txt");
 	ofstream Editor("temporary.txt");
 
-	if (!Remover)
+	if (!Editor)
 	{
-		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		cout << "(!) Error: (temporary.txt) cannot be created." << endl;
 		system("pause");
 		exit(0);
 	}
 
-	else if (!Editor)
+	else if (!Remover)
 	{
-		cout << "(!) Error: (temporary.txt) cannot be created." << endl;
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		remove("temporary.txt");
 		system("pause");
 		exit(0);
 	}
@@ -459,8 +471,8 @@ void removeAccount(string user)
 				if (Remover.fail())
 				{
 					cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
-					system("pause");
 					remove("temporary.txt");
+					system("pause");
 					exit(0);
 				}
 				else if (gone.substr(0, auser.size()) != auser)
@@ -615,16 +627,17 @@ void changePassword(string user)
 	ifstream Remover("Security_Primer.txt");
 	ofstream Editor("temporary.txt", ofstream::app);
 
-	if (!Remover)
+	if (!Editor)
 	{
-		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		cout << "(!) Error: (temporary.txt) cannot be created." << endl;
 		system("pause");
 		exit(0);
 	}
 
-	else if (!Editor)
+	else if (!Remover)
 	{
-		cout << "(!) Error: (temporary.txt) cannot be created." << endl;
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		remove("temporary.txt");
 		system("pause");
 		exit(0);
 	}
@@ -699,6 +712,7 @@ void changePassword(string user)
 				if (Remover.fail())
 				{
 					cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
+					remove("temporary.txt");
 					system("pause");
 					exit(0);
 				}
@@ -796,16 +810,17 @@ void nameListAdd(string user)
 	ofstream WorkerA("temp2.txt", ofstream::app);
 	ifstream ReadoutA("nameList.txt");
 
-	if (!ReadoutA)
+	if (!WorkerA)
 	{
-		cout << "(!) Error 101: (nameList.txt) cannot be opened. \n    Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
-		system("pause");
-		exit(0);
+	cout << "(!) Error: (temp2.txt) cannot be created." << endl;
+	system("pause");
+	exit(0);
 	}
 
-	else if (!WorkerA)
+	else if (!ReadoutA)
 	{
-		cout << "(!) Error: (temp2.txt) cannot be created." << endl;
+		cout << "(!) Error 101: (nameList.txt) cannot be opened. \n    Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
+		remove("temp2.txt");
 		system("pause");
 		exit(0);
 	}
@@ -813,6 +828,8 @@ void nameListAdd(string user)
 	else 
 	{
 		string line;
+
+		WorkerA << user;
 
 		while (getline(ReadoutA, line))
 		{
@@ -826,11 +843,9 @@ void nameListAdd(string user)
 
 			else if (line.substr(0, user.size()) != user)
 			{
-				WorkerA << line << endl;
+				WorkerA << endl << line;
 			}
 		}
-
-		WorkerA << user;
 
 		ReadoutA.close();
 		WorkerA.close();
@@ -844,16 +859,17 @@ void nameListGone(string user)
 	ifstream RemoverA("nameList.txt");
 	ofstream EditorA("temporary2.txt");
 
-	if (!RemoverA)
+	if (!EditorA)
+	{
+	cout << "(!) Error: (temporary2.txt) cannot be created." << endl;
+	system("pause");
+	exit(0);
+	}
+
+	else if (!RemoverA)
 	{
 		cout << "(!) Error 101: (nameList.txt) cannot be opened. \n    Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
-		system("pause");
-		exit(0);
-	}
-	
-	else if (!EditorA)
-	{
-		cout << "(!) Error: (temporary2.txt) cannot be created." << endl;
+		remove("temporary2.txt");
 		system("pause");
 		exit(0);
 	}
@@ -866,9 +882,9 @@ void nameListGone(string user)
 		{
 			if (RemoverA.fail())
 			{
-				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
-				system("pause");
+				cout << "(!) Error 101: (nameList.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
 				remove("temporary2.txt");
+				system("pause");
 				exit(0);
 			}
 			else if (gone.substr(0, user.size()) != user)
