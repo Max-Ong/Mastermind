@@ -17,6 +17,8 @@ string securitypass(string user);
 int passencoder(char subpass);
 string pinencoder(string pass);
 void changePassword(string user);
+void nameListGone(string user);
+void nameListAdd(string user);
 
 int main()
 {
@@ -24,7 +26,7 @@ int main()
 	string choice, user;
 
 
-	ifstream Secure("Security_Primer.txt");
+	ifstream Secure("Security_Primer.txt"), nameList("nameList.txt");
 
 	if (!Secure)
 	{
@@ -32,10 +34,16 @@ int main()
 		system("pause");
 		exit(0);
 	}
+	else if (!nameList)
+	{
+		cout << "(!) Error 101: (nameList.txt) cannot be opened. \n    Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
+		system("pause");
+		exit(0);
+	}
 
 	else {
 		Secure.close();
-
+		nameList.close();
 		cout << "============ Security Menu ============" << endl << endl;
 
 	Choices:
@@ -182,15 +190,14 @@ int createAccount(string user)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		system("pause");
-		goto Leave;
+		exit(0);
 	}
 
 	else if (!Worker)
 	{
 		cout << "(!) Error: (temp.txt) cannot be created." << endl;
 		system("pause");
-
-		goto Leave;
+		exit(0);
 	}
 
 	else
@@ -204,8 +211,8 @@ int createAccount(string user)
 			if (Secure.fail())
 			{
 				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
-				break;
 				system("pause");
+				exit(0);
 			}
 		}
 		if (y != auser)
@@ -252,7 +259,7 @@ int createAccount(string user)
 					ch = _getch();
 					goto FirstPass;
 				}
-				else 
+				else
 				{
 					ch = _getch();
 					goto FirstPass;
@@ -284,7 +291,7 @@ int createAccount(string user)
 			else
 			{
 				cout << "Confirm Password: ";
-				
+
 				char cf = _getch();
 
 			SecondPass:
@@ -360,7 +367,15 @@ int createAccount(string user)
 
 					while (getline(Readout, line))
 					{
-						if (line.substr(0, auser.size()) != auser)
+						if (Readout.fail())
+						{
+							cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
+							system("pause");
+							remove("temp.txt");
+							exit(0);
+						}
+
+						else if (line.substr(0, auser.size()) != auser)
 						{
 							Worker << line << endl;
 						}
@@ -373,6 +388,9 @@ int createAccount(string user)
 					Readout.close();
 					remove("Security_Primer.txt");
 					rename("temp.txt", "Security_Primer.txt");
+
+					nameListAdd(user);
+
 					cout << "Account created, please login at mainscreen to access your new account :)" << endl << endl;
 					system("pause");
 					return 2;
@@ -415,12 +433,14 @@ void removeAccount(string user)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		system("pause");
+		exit(0);
 	}
 
 	else if (!Editor)
 	{
 		cout << "(!) Error: (temporary.txt) cannot be created." << endl;
 		system("pause");
+		exit(0);
 	}
 
 	else
@@ -430,14 +450,20 @@ void removeAccount(string user)
 
 		if (r == 0)
 		{
-
 			auser = securityencoder(user);
 
 			string filer;
 
 			while (getline(Remover, gone))
 			{
-				if (gone.substr(0, auser.size()) != auser)
+				if (Remover.fail())
+				{
+					cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
+					system("pause");
+					remove("temporary.txt");
+					exit(0);
+				}
+				else if (gone.substr(0, auser.size()) != auser)
 				{
 					filer += gone + '\n';
 				}
@@ -451,6 +477,8 @@ void removeAccount(string user)
 			Editor.close();
 			remove("Security_Primer.txt");
 			rename("temporary.txt", "Security_Primer.txt");
+
+			nameListGone(user);
 
 			cout << "Account (user:  " << user << ") has been removed." << endl << endl;
 
@@ -494,7 +522,7 @@ int accessAccount(string user)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		system("pause");
-		return 2;
+		exit(0);
 	}
 
 	else
@@ -579,7 +607,7 @@ int accessAccount(string user)
 	}
 }
 
-void changePassword(string user) 
+void changePassword(string user)
 {
 	int r;
 	string auser, gone, pass;
@@ -591,12 +619,14 @@ void changePassword(string user)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		system("pause");
+		exit(0);
 	}
 
 	else if (!Editor)
 	{
 		cout << "(!) Error: (temporary.txt) cannot be created." << endl;
 		system("pause");
+		exit(0);
 	}
 
 	else
@@ -651,7 +681,7 @@ void changePassword(string user)
 			{
 				cout << endl;
 			}
-			if (pass == "0") 
+			if (pass == "0")
 			{
 				goto Exit;
 			}
@@ -666,7 +696,14 @@ void changePassword(string user)
 
 			while (getline(Remover, gone))
 			{
-				if (gone.substr(0, auser.size()) != auser)
+				if (Remover.fail())
+				{
+					cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
+					system("pause");
+					exit(0);
+				}
+
+				else if (gone.substr(0, auser.size()) != auser)
 				{
 					filer += gone + '\n';
 				}
@@ -725,8 +762,7 @@ string securitypass(string user)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened.\n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		system("pause");
-		Finder.close();
-		return "0";
+		exit(0);
 	}
 	else
 	{
@@ -739,7 +775,8 @@ string securitypass(string user)
 			if (Finder.fail())
 			{
 				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.";
-				break;
+				system("pause");
+				exit(0);
 			}
 		}
 
@@ -751,6 +788,103 @@ string securitypass(string user)
 		{
 			return "0";
 		}
+	}
+}
+
+void nameListAdd(string user)
+{
+	ofstream WorkerA("temp2.txt", ofstream::app);
+	ifstream ReadoutA("nameList.txt");
+
+	if (!ReadoutA)
+	{
+		cout << "(!) Error 101: (nameList.txt) cannot be opened. \n    Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
+		system("pause");
+		exit(0);
+	}
+
+	else if (!WorkerA)
+	{
+		cout << "(!) Error: (temp2.txt) cannot be created." << endl;
+		system("pause");
+		exit(0);
+	}
+
+	else 
+	{
+		string line;
+
+		while (getline(ReadoutA, line))
+		{
+			if (ReadoutA.fail())
+			{
+				cout << "(!) Error 101: (nameList.txt) contains invalid data. Please close and reopen this project after the issue has been resolved.\n";
+				remove("temp2.txt");
+				system("pause");
+				exit(0);
+			}
+
+			else if (line.substr(0, user.size()) != user)
+			{
+				WorkerA << line << endl;
+			}
+		}
+
+		WorkerA << user;
+
+		ReadoutA.close();
+		WorkerA.close();
+		remove("nameList.txt");
+		rename("temp2.txt", "nameList.txt");
+	}
+}
+
+void nameListGone(string user) 
+{
+	ifstream RemoverA("nameList.txt");
+	ofstream EditorA("temporary2.txt");
+
+	if (!RemoverA)
+	{
+		cout << "(!) Error 101: (nameList.txt) cannot be opened. \n    Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
+		system("pause");
+		exit(0);
+	}
+	
+	else if (!EditorA)
+	{
+		cout << "(!) Error: (temporary2.txt) cannot be created." << endl;
+		system("pause");
+		exit(0);
+	}
+
+	else 
+	{
+		string filer, gone;
+
+		while (getline(RemoverA, gone))
+		{
+			if (RemoverA.fail())
+			{
+				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
+				system("pause");
+				remove("temporary2.txt");
+				exit(0);
+			}
+			else if (gone.substr(0, user.size()) != user)
+			{
+				filer += gone + '\n';
+			}
+		}
+
+		int g = filer.size();
+		filer.resize(g - 1);
+		EditorA << filer;
+
+		RemoverA.close();
+		EditorA.close();
+		remove("nameList.txt");
+		rename("temporary2.txt", "nameList.txt");
 	}
 }
 
