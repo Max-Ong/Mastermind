@@ -734,7 +734,15 @@ string Combiner(string auser)
 
 		else if (line.substr(0, auser.size()) != auser)
 		{
-			filer += line + '\n';
+			int rng = RNG();
+			if (rng == 0)
+			{
+				filer += line + '\n';
+			}
+			else
+			{
+				filer = (line + '\n' + filer);
+			}
 		}
 	}
 	Readout.close();
