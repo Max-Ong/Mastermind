@@ -23,6 +23,8 @@ void Mixer(string auser, string cpass);
 string Combiner(string auser);
 string nameReader(string user);
 int RNG();
+void Crash();
+void Title();
 
 int main()
 {
@@ -34,36 +36,30 @@ string Security()
 	int x;
 	string choice, user;
 
-
 	ifstream Secure("Security_Primer.txt"), nameList("nameList.txt");
-	ofstream Tester("temp.txt");
-	if (!Tester)
-	{
-		cout << "(!) Error: (temp.txt) cannot be created." << endl;
-		system("pause");
-		exit(0);
-	}
-	else if (!Secure)
+	if (!Secure)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
-		remove("temp.txt");
-		system("pause");
-		exit(0);
+		Crash();
 	}
 	else if (!nameList)
 	{
 		cout << "(!) Error 101: (nameList.txt) cannot be opened. \n    Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
-		remove("temp.txt");
-		system("pause");
-		exit(0);
+		Crash();
+	}
+
+	ofstream Tester("temp.txt");
+	if (!Tester)
+	{
+		cout << "(!) Error: (temp.txt) cannot be created." << endl;
+		Crash();
 	}
 
 	Secure.close();
 	nameList.close();
 	Tester.close();
 	remove("temp.txt");
-
-	cout << "============ Security Menu ============" << endl << endl;
+	Title();
 
 Choices:
 	cout << "1. Sign In." << endl
@@ -73,9 +69,7 @@ Choices:
 		<< "Please Enter your choice to continue: ";
 	cin >> choice;
 
-	system("CLS");
-	cout << "============ Security Menu ============" << endl << endl;
-
+	Title();
 	if (choice == "1")
 	{
 	Protocall:
@@ -86,8 +80,7 @@ Choices:
 
 		if (user == "0")
 		{
-			system("CLS");
-			cout << "============ Security Menu ============" << endl << endl;
+			Title();
 			goto Choices;
 		}
 
@@ -107,8 +100,7 @@ Choices:
 
 		if (user == "0")
 		{
-			system("CLS");
-			cout << "============ Security Menu ============" << endl << endl;
+			Title();
 			goto Choices;
 		}
 
@@ -127,8 +119,7 @@ Choices:
 
 		if (user == "0")
 		{
-			system("CLS");
-			cout << "============ Security Menu ============" << endl << endl;
+			Title();
 			goto Choices;
 		}
 
@@ -148,8 +139,7 @@ Choices:
 
 		if (user == "0")
 		{
-			system("CLS");
-			cout << "============ Security Menu ============" << endl << endl;
+			Title();
 			goto Choices;
 		}
 
@@ -165,9 +155,7 @@ Choices:
 		goto Choices;
 	}
 
-	system("CLS");
-	cout << "============ Security Menu ============" << endl << endl;
-
+	Title();
 	if (x == 0)
 	{
 		cout << "Access Granted. Welcome " << user << "." << endl;
@@ -207,8 +195,7 @@ int createAccount(string user)
 	if (!Secure)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
-		system("pause");
-		exit(0);
+		Crash();
 	}
 
 	else
@@ -222,8 +209,7 @@ int createAccount(string user)
 			if (Secure.fail())
 			{
 				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
-				system("pause");
-				exit(0);
+				Crash();
 			}
 		}
 
@@ -237,13 +223,11 @@ int createAccount(string user)
 			char ch;
 			ch = _getch();
 
-			system("CLS");
-			cout << "============ Security Menu ============" << endl << endl;
+			Title();
 			cout << "Please enter the username and password for your new account." << endl
 				<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
 				<< "Username: ";
-			cout << user << endl;
-			cout << "Password: ";
+			cout << user << endl << "Password: ";
 
 		FirstPass:
 			while (ch != 13 && ch != 8)
@@ -253,13 +237,12 @@ int createAccount(string user)
 				ch = _getch();
 			}
 
+			int g = pass.size();
 			if (ch == 8)
 			{
-				int g = pass.size();
 				if (g != 0)
 				{
-					system("CLS");
-					cout << "============ Security Menu ============" << endl << endl;
+					Title();
 					pass.resize(g - 1);
 
 					cout << "Please enter the username and password for your new account." << endl
@@ -280,7 +263,7 @@ int createAccount(string user)
 				}
 			}
 
-			else if (ch == 13 && pass == "")
+			else if (ch == 13 && g == 0)
 			{
 				ch = _getch();
 				goto FirstPass;
@@ -311,14 +294,12 @@ int createAccount(string user)
 					cf = _getch();
 				}
 
+				int m = apass.size();
 				if (cf == 8)
 				{
-					int m = apass.size();
 					if (m != 0)
 					{
-						system("CLS");
-						cout << "============ Security Menu ============" << endl << endl;
-
+						Title();
 						apass.resize(m - 1);
 
 						cout << "Please enter the username and password for your new account." << endl
@@ -348,8 +329,7 @@ int createAccount(string user)
 						goto SecondPass;
 					}
 				}
-
-				else if (cf == 13 && apass == "")
+				else if (cf == 13 && m == 0)
 				{
 					cf = _getch();
 					goto SecondPass;
@@ -357,20 +337,14 @@ int createAccount(string user)
 
 				else
 				{
-
-
-					system("CLS");
-					cout << "============ Security Menu ============" << endl << endl;
-
+					Title();
 					if (apass == "0")
 					{
 						goto Leave;
 					}
-
 					else if (pass == apass)
 					{
 						cpass = pinencoder(pass);
-
 						Mixer(auser, cpass);
 
 						int op = 0;
@@ -419,8 +393,7 @@ RemovalProcess:
 		if (!Worker)
 		{
 			cout << "(!) Error: (temporary.txt) cannot be created." << endl;
-			system("pause");
-			exit(0);
+			Crash();
 		}
 
 		Worker << filer;
@@ -456,8 +429,7 @@ int accessAccount(string user)
 	if (!Secure)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
-		system("pause");
-		exit(0);
+		Crash();
 	}
 	else
 	{
@@ -467,8 +439,7 @@ int accessAccount(string user)
 		char ch;
 		ch = _getch();
 
-		system("CLS");
-		cout << "============ Security Menu ============" << endl << endl;
+		Title();
 		cout << "Please enter the username and password for the account you wish to access." << endl
 			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
 			<< "Username: ";
@@ -483,14 +454,13 @@ int accessAccount(string user)
 			ch = _getch();
 		}
 
+		int g = pass.size();
+
 		if (ch == 8)
 		{
-			int g = pass.size();
 			if (g != 0)
 			{
-				system("CLS");
-				cout << "============ Security Menu ============" << endl << endl;
-
+				Title();
 				pass.resize(g - 1);
 
 				cout << "Please enter the username and password for the account you wish to access." << endl
@@ -510,8 +480,13 @@ int accessAccount(string user)
 				goto FirstPass;
 			}
 		}
-		system("CLS");
-		cout << "============ Security Menu ============" << endl << endl;
+		else if (ch == 13 && g == 0)
+		{
+			ch = _getch();
+			goto FirstPass;
+		}
+
+		Title();
 
 		cpass = pinencoder(pass);
 		apass = securitypass(user);
@@ -535,15 +510,14 @@ int accessAccount(string user)
 void changePassword(string user)
 {
 	int r;
-	string auser, pass;
+	string auser, pass = "";
 
 ChangeProcess:
 	r = accessAccount(user);
 
 	if (r == 0)
 	{
-		system("CLS");
-		cout << "============ Security Menu ============" << endl << endl;
+		Title();
 		cout << "User: " << user << "\n\nPlease Enter your new password below.\n\nNew password:";
 
 		char ch;
@@ -557,14 +531,13 @@ ChangeProcess:
 			ch = _getch();
 		}
 
+		int g = pass.size();
+
 		if (ch == 8)
 		{
-			int g = pass.size();
 			if (g != 0)
 			{
-				system("CLS");
-				cout << "============ Security Menu ============" << endl << endl;
-
+				Title();
 				pass.resize(g - 1);
 
 				cout << "User: " << user << "\n\nPlease Enter your new password below.\n\nNew password:";
@@ -582,14 +555,17 @@ ChangeProcess:
 				goto FirstPass;
 			}
 		}
-		
+		else if (ch == 13 && g == 0)
+		{
+			ch = _getch();
+			goto FirstPass;
+		}
+
 		if (pass != "0")
 		{
 			string cpass = pinencoder(pass);
 
-			system("CLS");
-			cout << "============ Security Menu ============" << endl << endl;
-
+			Title();
 			auser = securityencoder(user);
 
 			Mixer(auser, cpass);
@@ -623,8 +599,7 @@ string securitypass(string user)
 	if (!Finder)
 	{
 		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened.\n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
-		system("pause");
-		exit(0);
+		Crash();
 	}
 	else
 	{
@@ -636,8 +611,7 @@ string securitypass(string user)
 			if (Finder.fail())
 			{
 				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.";
-				system("pause");
-				exit(0);
+				Crash();
 			}
 		}
 
@@ -661,8 +635,7 @@ void nameListAdd(string user, int op)
 	if (!WorkerA)
 	{
 		cout << "(!) Error: (temporary.txt) cannot be created." << endl;
-		system("pause");
-		exit(0);
+		Crash();
 	}
 	else
 	{
@@ -691,8 +664,7 @@ void Mixer(string auser, string cpass)
 	if (!Worker)
 	{
 		cout << "(!) Error: (temp.txt) cannot be created." << endl;
-		system("pause");
-		exit(0);
+		Crash();
 	}
 
 	x = RNG();
@@ -719,8 +691,7 @@ string Combiner(string auser)
 	if (!Readout)
 	{
 	cout << "(!) Error 101: (Security_Primer.txt) cannot be opened. \n    Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
-	system("pause");
-	exit(0);
+	Crash();
 	}
 
 	while (getline(Readout, line))
@@ -728,8 +699,7 @@ string Combiner(string auser)
 		if (Readout.fail())
 		{
 			cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
-			system("pause");
-			exit(0);
+			Crash();
 		}
 
 		else if (line.substr(0, auser.size()) != auser)
@@ -759,8 +729,7 @@ string nameReader(string user)
 	if (!ReadoutA)
 	{
 	cout << "(!) Error 101: (nameList.txt) cannot be opened. \n    Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
-	system("pause");
-	exit(0);
+	Crash();
 	}
 
 	while (getline(ReadoutA, line))
@@ -768,8 +737,7 @@ string nameReader(string user)
 		if (ReadoutA.fail())
 		{
 			cout << "(!) Error 101: (nameList.txt) contains invalid codes. Please close and reopen this project after the issue has been resolved.\n";
-			system("pause");
-			exit(0);
+			Crash();
 		}
 		else if (line.substr(0, user.size()) != user)
 		{
@@ -835,4 +803,16 @@ int RNG() //for harder guessing of which coded password belongs to which user on
 	srand(time(NULL));
 	x = rand() % 2;
 	return x;
+}
+
+void Crash()
+{
+	system("pause");
+	exit(0);
+}
+
+void Title()
+{
+	system("CLS");
+	cout << "============ Security Menu ============" << endl << endl;
 }
