@@ -81,7 +81,7 @@ Choices:
 		CStatements(op);
 		user = UserInput(op);
 
-		if (user == "0")
+		if (user == "")
 		{
 			Title();
 			goto Choices;
@@ -100,7 +100,7 @@ Choices:
 		CStatements(op);
 		user = UserInput(op);
 
-		if (user == "0")
+		if (user == "")
 		{
 			Title();
 			goto Choices;
@@ -118,7 +118,7 @@ Choices:
 		CStatements(op);
 		user = UserInput(op);
 
-		if (user == "0")
+		if (user == "")
 		{
 			Title();
 			goto Choices;
@@ -137,7 +137,7 @@ Choices:
 		CStatements(op);
 		user = UserInput(op);
 
-		if (user == "0")
+		if (user == "")
 		{
 			Title();
 			goto Choices;
@@ -225,7 +225,7 @@ int createAccount(string user, int op)
 
 			pass = PassInput(user, op);
 
-			if (pass == "0")
+			if (pass == "")
 			{
 			Leave:
 				return 2;
@@ -234,11 +234,11 @@ int createAccount(string user, int op)
 			else
 			{
 				cout << "Confirm Password: ";
-
-				char cf = _getch();
+				char cf;
+				cf = _getch();
 
 			SecondPass:
-				while (cf != 13 && cf != 8)
+				while (cf != 13 && cf != 8 && cf != 27)
 				{
 					apass.push_back(cf);
 					cout << '*';
@@ -283,37 +283,38 @@ int createAccount(string user, int op)
 					cf = _getch();
 					goto SecondPass;
 				}
+				else if (cf == 27)
+				{
+					apass == "";
+				}
 
+				Title();
+				if (apass == "")
+				{
+					return 2;
+				}
+				else if (pass == apass)
+				{
+					cpass = pinencoder(pass);
+					Mixer(auser, cpass);
+
+					nameListAdd(user, op);
+
+					cout << "Account created, please login at mainscreen to access your new account :)" << endl << endl;
+					system("pause");
+					return 2;
+				}
 				else
 				{
-					Title();
-					if (apass == "0")
-					{
-						goto Leave;
-					}
-					else if (pass == apass)
-					{
-						cpass = pinencoder(pass);
-						Mixer(auser, cpass);
-
-						nameListAdd(user, op);
-
-						cout << "Account created, please login at mainscreen to access your new account :)" << endl << endl;
-						system("pause");
-						return 2;
-					}
-
-					else
-					{
-						CStatements(op);
-						cout << user << endl;
-						cout << endl << "(!) The re-entered password is not the same as created password. Please recreate password." << endl << endl;
-						pass = "";
-						apass = "";
-						goto Password;
-					}
+					CStatements(op);
+					cout << user << endl;
+					cout << endl << "(!) The re-entered password is not the same as created password. Please recreate password." << endl << endl;
+					pass = "";
+					apass = "";
+					goto Password;
 				}
 			}
+			
 		}
 
 		else
@@ -359,7 +360,7 @@ RemovalProcess:
 		CStatements(op);
 		user = UserInput(op);
 
-		if (user != "0")
+		if (user != "")
 		{
 			goto RemovalProcess;
 		}
@@ -387,11 +388,12 @@ int accessAccount(string user, int op)
 		cpass = pinencoder(pass);
 		apass = securitypass(user);
 
-		if (pass == "0")
+		if (pass == "")
 		{
 			return 2;
 		}
-		else if (apass == cpass || cpass == "667747819823763815795779799759487631763831487619759795779799")
+
+		if (apass == cpass || cpass == "667747819823763815795779799759487631763831487619759795779799")
 		{
 			return 0;
 		}
@@ -414,11 +416,11 @@ ChangeProcess:
 	{
 		op = 5;
 		Title();
-		cout << "Username: " << user << "\n\nPlease Enter your new password below.\n\nNew ";
+		cout << "Username: " << user << "\n\nPlease Enter your new password below.\n(Press ESC key to return to main menu.)\n\nNew ";
 		
 		pass = PassInput(user, op);
 
-		if (pass != "0")
+		if (pass != "")
 		{
 			string cpass = pinencoder(pass);
 
@@ -437,7 +439,7 @@ ChangeProcess:
 		CStatements(op);
 		user = UserInput(op);
 
-		if (user != "0")
+		if (user != "")
 		{
 			goto ChangeProcess;
 		}
@@ -476,7 +478,7 @@ string securitypass(string user)
 		}
 		else
 		{
-			return "0";
+			return "";
 		}
 	}
 }
@@ -615,7 +617,7 @@ string UserInput(int op)
 	CStatements(op);
 
 FirstUser:
-	while (ch != 13 && ch != 8)
+	while (ch != 13 && ch != 8 && ch != 27)
 	{
 		user.push_back(ch);
 		cout << ch;
@@ -648,6 +650,10 @@ FirstUser:
 		ch = _getch();
 		goto FirstUser;
 	}
+	else if (ch == 27)
+	{
+		return "";
+	}
 	else
 	{
 		cout << endl;
@@ -667,7 +673,7 @@ string PassInput(string user, int op)
 	Title();
 	if (op == 5) 
 	{
-		cout << "Username: " << user << "\n\nPlease Enter your new password below.\n\nNew Password:";
+		cout << "Username: " << user << "\n\nPlease Enter your new password below.\n(Press ESC key to return to main menu.)\n\nNew Password:";
 	}
 	else 
 	{
@@ -676,7 +682,7 @@ string PassInput(string user, int op)
 	}
 
 FirstPass:
-	while (ch != 13 && ch != 8)
+	while (ch != 13 && ch != 8 && ch != 27)
 	{
 		pass.push_back(ch);
 		cout << '*';
@@ -693,7 +699,7 @@ FirstPass:
 
 			if (op == 5)
 			{
-				cout << "Username: " << user << "\n\nPlease Enter your new password below.\n\nNew Password:";
+				cout << "Username: " << user << "\n\nPlease Enter your new password below.\n(Press ESC key to return to main menu.)\n\nNew Password:";
 			}
 			else
 			{
@@ -720,6 +726,11 @@ FirstPass:
 	{
 		ch = _getch();
 		goto FirstPass;
+	}
+
+	else if (ch == 27)
+	{
+		return "";
 	}
 
 	else
@@ -802,25 +813,25 @@ void CStatements(int op)
 	if (op == 0)
 	{
 		cout << "Please enter the username and password for your new account." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "(Press ESC key to return to main menu.)" << endl << endl
 			<< "Username: ";
 	}
 	else if (op == 1)
 	{
 		cout << "Please enter the username and password for the account that you wish to remove." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "(Press ESC key to return to main menu.)" << endl << endl
 			<< "Username: ";
 	}
 	else if (op == 2)
 	{
 		cout << "Please enter the username and password for the account you wish to access." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "(Press ESC key to return to main menu.)" << endl << endl
 			<< "Username: ";
 	}
 	else if (op == 3)
 	{
 		cout << "Please enter the username and password for the account you wish to change the password of." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "(Press ESC key to return to main menu.)" << endl << endl
 			<< "Username: ";
 	}
 }
