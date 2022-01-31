@@ -10,21 +10,24 @@
 using namespace std;
 
 string Security();
-int accessAccount(string user);
-int createAccount(string user);
-void removeAccount(string user);
+int accessAccount(string user, int op);
+int createAccount(string user, int op);
+void removeAccount(string user, int op);
+void changePassword(string user, int op);
+void Mixer(string auser, string cpass);
+void nameListAdd(string user, int op);
+string PassInput(string user, int op);
 string securityencoder(string user);
 string securitypass(string user);
-int passencoder(char subpass);
-string pinencoder(string pass);
-void changePassword(string user);
-void nameListAdd(string user, int op);
-void Mixer(string auser, string cpass);
-string Combiner(string auser);
 string nameReader(string user);
-int RNG();
+string Combiner(string auser);
+string pinencoder(string pass);
+int passencoder(char subpass);
+string UserInput(int op);
+void CStatements(int op);
 void Crash();
 void Title();
+int RNG();
 
 int main()
 {
@@ -73,10 +76,9 @@ Choices:
 	if (choice == "1")
 	{
 	Protocall:
-		cout << "Please enter the username and password for the account you wish to access." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cin >> user;
+		int op = 2;
+		CStatements(op);
+		user = UserInput(op);
 
 		if (user == "0")
 		{
@@ -86,17 +88,16 @@ Choices:
 
 		else
 		{
-			x = accessAccount(user);
+			x = accessAccount(user, op);
 		}
 	}
 
 	else if (choice == "2")
 	{
 	Creative:
-		cout << "Please enter the username and password for your new account." << endl
-			<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cin >> user;
+		int op = 0;
+		CStatements(op);
+		user = UserInput(op);
 
 		if (user == "0")
 		{
@@ -106,16 +107,15 @@ Choices:
 
 		else
 		{
-			x = createAccount(user);
+			x = createAccount(user, op);
 		}
 	}
 
 	else if (choice == "3")
 	{
-		cout << "Please enter the username and password for the account that you wish to remove." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cin >> user;
+		int op = 1;
+		CStatements(op);
+		user = UserInput(op);
 
 		if (user == "0")
 		{
@@ -125,17 +125,16 @@ Choices:
 
 		else
 		{
-			removeAccount(user);
+			removeAccount(user, op);
 			x = 2;
 		}
 	}
 
 	else if (choice == "4")
 	{
-		cout << "Please enter the username and password for the account you wish to change the password of." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cin >> user;
+		int op = 3;
+		CStatements(op);
+		user = UserInput(op);
 
 		if (user == "0")
 		{
@@ -145,10 +144,11 @@ Choices:
 
 		else
 		{
-			changePassword(user);
+			changePassword(user, op);
 			x = 2;
 		}
 	}
+
 	else
 	{
 		cout << "(!) Invalid choice entered, Please enter a valid choice." << endl << endl;
@@ -156,12 +156,13 @@ Choices:
 	}
 
 	Title();
+
 	if (x == 0)
 	{
 		cout << "Access Granted. Welcome " << user << "." << endl;
 		Sleep(4000);
 		system("CLS");
-		goto Programs;
+		return user;
 	}
 
 	else if (x == 1)
@@ -180,14 +181,11 @@ Choices:
 		cout << "(!) This username has already been taken. Please use a different username." << endl << endl;
 		goto Creative;
 	}
-
-Programs:
-	return user;
 }
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-int createAccount(string user)
+int createAccount(string user, int op)
 {
 	ifstream Secure("Security_Primer.txt");
 	string x, apass, pass, auser, y, cpass;
@@ -218,61 +216,8 @@ int createAccount(string user)
 		if (y != auser)
 		{
 		Password:
-			cout << "Password: ";
 
-			char ch;
-			ch = _getch();
-
-			Title();
-			cout << "Please enter the username and password for your new account." << endl
-				<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-				<< "Username: ";
-			cout << user << endl << "Password: ";
-
-		FirstPass:
-			while (ch != 13 && ch != 8)
-			{
-				pass.push_back(ch);
-				cout << '*';
-				ch = _getch();
-			}
-
-			int g = pass.size();
-			if (ch == 8)
-			{
-				if (g != 0)
-				{
-					Title();
-					pass.resize(g - 1);
-
-					cout << "Please enter the username and password for your new account." << endl
-						<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-						<< "Username: ";
-					cout << user << endl << "Password: ";
-					for (int i = 0; i < (g - 1); i++)
-					{
-						cout << '*';
-					}
-					ch = _getch();
-					goto FirstPass;
-				}
-				else
-				{
-					ch = _getch();
-					goto FirstPass;
-				}
-			}
-
-			else if (ch == 13 && g == 0)
-			{
-				ch = _getch();
-				goto FirstPass;
-			}
-
-			else
-			{
-				cout << endl;
-			}
+			pass = PassInput(user, op);
 
 			if (pass == "0")
 			{
@@ -302,9 +247,7 @@ int createAccount(string user)
 						Title();
 						apass.resize(m - 1);
 
-						cout << "Please enter the username and password for your new account." << endl
-							<< "Note: Username shounld not include spaces or system shall take the first word entered as username. \n(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-							<< "Username: ";
+						CStatements(op);
 						cout << user << endl;
 						cout << "Password: ";
 						int g = pass.size();
@@ -347,7 +290,6 @@ int createAccount(string user)
 						cpass = pinencoder(pass);
 						Mixer(auser, cpass);
 
-						int op = 0;
 						nameListAdd(user, op);
 
 						cout << "Account created, please login at mainscreen to access your new account :)" << endl << endl;
@@ -357,9 +299,8 @@ int createAccount(string user)
 
 					else
 					{
-						cout << "Please enter the username and password for your new account." << endl
-							<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-							<< "Username: " << user << endl;
+						CStatements(op);
+						cout << user << endl;
 						cout << endl << "(!) The re-entered password is not the same as created password. Please recreate password." << endl << endl;
 						pass = "";
 						apass = "";
@@ -376,13 +317,13 @@ int createAccount(string user)
 	}
 }
 
-void removeAccount(string user)
+void removeAccount(string user, int op)
 {
-	int r, op = 1;
+	int r;
 	string auser;
 
 RemovalProcess:
-	r = accessAccount(user);
+	r = accessAccount(user, op);
 	if (r == 0)
 	{
 		string filer;
@@ -409,10 +350,8 @@ RemovalProcess:
 	}
 	else if (r == 1)
 	{
-		cout << "Please enter the username and password for the account that you wish to remove." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cin >> user;
+		CStatements(op);
+		user = UserInput(op);
 
 		if (user != "0")
 		{
@@ -421,7 +360,7 @@ RemovalProcess:
 	}
 }
 
-int accessAccount(string user)
+int accessAccount(string user, int op)
 {
 	string apass, pass, cpass;
 
@@ -434,57 +373,8 @@ int accessAccount(string user)
 	else
 	{
 		Secure.close();
-		cout << "Password: ";
-
-		char ch;
-		ch = _getch();
-
-		Title();
-		cout << "Please enter the username and password for the account you wish to access." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cout << user << endl;
-		cout << "Password: ";
-
-	FirstPass:
-		while (ch != 13 && ch != 8)
-		{
-			pass.push_back(ch);
-			cout << '*';
-			ch = _getch();
-		}
-
-		int g = pass.size();
-
-		if (ch == 8)
-		{
-			if (g != 0)
-			{
-				Title();
-				pass.resize(g - 1);
-
-				cout << "Please enter the username and password for the account you wish to access." << endl
-					<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-					<< "Username: ";
-				cout << user << endl << "Password: ";
-				for (int i = 0; i < (g - 1); i++)
-				{
-					cout << '*';
-				}
-				ch = _getch();
-				goto FirstPass;
-			}
-			else
-			{
-				ch = _getch();
-				goto FirstPass;
-			}
-		}
-		else if (ch == 13 && g == 0)
-		{
-			ch = _getch();
-			goto FirstPass;
-		}
+	
+		pass = PassInput(user, op);
 
 		Title();
 
@@ -507,18 +397,18 @@ int accessAccount(string user)
 	}
 }
 
-void changePassword(string user)
+void changePassword(string user, int op)
 {
 	int r;
 	string auser, pass = "";
 
 ChangeProcess:
-	r = accessAccount(user);
+	r = accessAccount(user, op);
 
 	if (r == 0)
 	{
 		Title();
-		cout << "User: " << user << "\n\nPlease Enter your new password below.\n\nNew password:";
+		cout << "Username: " << user << "\n\nPlease Enter your new password below.\n\nNew password:";
 
 		char ch;
 		ch = _getch();
@@ -540,7 +430,7 @@ ChangeProcess:
 				Title();
 				pass.resize(g - 1);
 
-				cout << "User: " << user << "\n\nPlease Enter your new password below.\n\nNew password:";
+				cout << "Username: " << user << "\n\nPlease Enter your new password below.\n\nNew password:";
 
 				for (int i = 0; i < (g - 1); i++)
 				{
@@ -577,10 +467,8 @@ ChangeProcess:
 
 	else if (r == 1)
 	{
-		cout << "Please enter the username and password for the account you wish to change the password of." << endl
-			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
-			<< "Username: ";
-		cin >> user;
+		CStatements(op);
+		user = UserInput(op);
 
 		if (user != "0")
 		{
@@ -750,6 +638,115 @@ string nameReader(string user)
 	return filer;
 }
 
+string UserInput(int op)
+{
+	string user;
+	char ch;
+	ch = _getch();
+
+	Title();
+	CStatements(op);
+
+FirstUser:
+	while (ch != 13 && ch != 8)
+	{
+		user.push_back(ch);
+		cout << ch;
+		ch = _getch();
+	}
+
+	int g = user.size();
+
+	if (ch == 8)
+	{
+		if (g != 0)
+		{
+			user.resize(g - 1);
+
+			Title();
+			CStatements(op);
+			cout << user;
+
+			ch = _getch();
+			goto FirstUser;
+		}
+		else
+		{
+			ch = _getch();
+			goto FirstUser;
+		}
+	}
+	else if (ch == 13 && g == 0)
+	{
+		ch = _getch();
+		goto FirstUser;
+	}
+	else
+	{
+		cout << endl;
+		return user;
+	}
+}
+
+string PassInput(string user, int op)
+{
+	string pass;
+
+	cout << "Password: ";
+
+	char ch;
+	ch = _getch();
+
+	Title();
+	CStatements(op);
+	cout << user << endl << "Password: ";
+
+FirstPass:
+	while (ch != 13 && ch != 8)
+	{
+		pass.push_back(ch);
+		cout << '*';
+		ch = _getch();
+	}
+
+	int g = pass.size();
+	if (ch == 8)
+	{
+		if (g != 0)
+		{
+			Title();
+			pass.resize(g - 1);
+
+			CStatements(op);
+			cout << user << endl << "Password: ";
+			for (int i = 0; i < (g - 1); i++)
+			{
+				cout << '*';
+			}
+			ch = _getch();
+			goto FirstPass;
+		}
+		else
+		{
+			ch = _getch();
+			goto FirstPass;
+		}
+	}
+
+	else if (ch == 13 && g == 0)
+	{
+		ch = _getch();
+		goto FirstPass;
+	}
+
+	else
+	{
+		cout << endl;
+	}
+
+	return pass;
+}
+
 /*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 string securityencoder(string user) //auser contain even number codes
@@ -805,6 +802,8 @@ int RNG() //for harder guessing of which coded password belongs to which user on
 	return x;
 }
 
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 void Crash()
 {
 	system("pause");
@@ -815,4 +814,32 @@ void Title()
 {
 	system("CLS");
 	cout << "============ Security Menu ============" << endl << endl;
+}
+
+void CStatements(int op)
+{
+	if (op == 0)
+	{
+		cout << "Please enter the username and password for your new account." << endl
+			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "Username: ";
+	}
+	else if (op == 1)
+	{
+		cout << "Please enter the username and password for the account that you wish to remove." << endl
+			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "Username: ";
+	}
+	else if (op == 2)
+	{
+		cout << "Please enter the username and password for the account you wish to access." << endl
+			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "Username: ";
+	}
+	else if (op == 3)
+	{
+		cout << "Please enter the username and password for the account you wish to change the password of." << endl
+			<< "(Enter 0 as Username or Password to return to main menu.)" << endl << endl
+			<< "Username: ";
+	}
 }
