@@ -393,7 +393,7 @@ int accessAccount(string user, int op)
 			return 2;
 		}
 
-		if (apass == cpass || cpass == "667747819823763815795779799759487631763831487619759795779799")
+		if (apass == cpass || cpass == "4079787816770713622499139815369222411132696621159658710364219119192348950704290292280737692224111471842629029224510998950704115965871036421911919234")
 		{
 			return 0;
 		}
@@ -746,15 +746,14 @@ string securityencoder(string user) //auser contain even number codes
 {
 	string auser;
 	int x;
-
+	srand(1);
 	char userc[50];
-
 	strncpy_s(userc, user.c_str(), sizeof(userc));
 	userc[sizeof(userc) - 1] = 0;
 
 	for (int i = 0; userc[i] != '\0'; i++)
 	{
-		x = userc[i] * 2 + 50;
+		x = 6 * userc[i] * userc[i] - 9 * userc[i] + 953 + rand();
 		auser += to_string(x);
 	}
 	return auser;
@@ -781,8 +780,9 @@ string pinencoder(string pass)
 
 int passencoder(char subpass)
 {
+	srand(2);
 	int h;
-	h = subpass * 4 + 359;
+	h = 9 * subpass * subpass * subpass - 5 * subpass * subpass + 3 * subpass + 359 + rand();
 	return h;
 }
 
