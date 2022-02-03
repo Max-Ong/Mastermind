@@ -290,7 +290,7 @@ int createAccount(string user, int op)
 				}
 				else if (cf == 27)
 				{
-					apass == "";
+					apass = "";
 				}
 
 				Title();
