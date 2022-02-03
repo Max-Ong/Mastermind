@@ -42,11 +42,13 @@ string Security()
 	ifstream Secure("Security_Primer.txt"), nameList("nameList.txt");
 	if (!Secure)
 	{
+		Title();
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 	else if (!nameList)
 	{
+		Title();
 		cout << " (!) Error 101: (nameList.txt) cannot be opened. \n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -54,6 +56,7 @@ string Security()
 	ofstream Tester("temp.txt");
 	if (!Tester)
 	{
+		Title();
 		cout << " (!) Error: (temp.txt) cannot be created." << endl;
 		Crash();
 	}
@@ -162,7 +165,7 @@ Choices:
 
 	else
 	{
-		cout << " (!) Invalid choice entered, Please enter a valid choice." << endl << endl;
+		cout << " (?) Invalid choice entered, Please enter a valid choice." << endl << endl;
 		goto Choices;
 	}
 
@@ -178,7 +181,7 @@ Choices:
 
 	else if (x == 1)
 	{
-		cout << " (!) Access Denied. Please try again." << endl << endl;
+		cout << " (?) Access Denied. Please try again." << endl << endl;
 		goto Protocall;
 	}
 
@@ -189,7 +192,7 @@ Choices:
 
 	else if (x == 3)
 	{
-		cout << " (!) This username has already been taken. Please use a different username." << endl << endl;
+		cout << " (?) This username has already been taken. Please use a different username." << endl << endl;
 		goto Creative;
 	}
 }
@@ -203,6 +206,7 @@ int createAccount(string user, int op)
 
 	if (!Secure)
 	{
+		Title();
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -217,6 +221,7 @@ int createAccount(string user, int op)
 
 			if (Secure.fail())
 			{
+				Title();
 				cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.\n";
 				Crash();
 			}
@@ -313,7 +318,7 @@ int createAccount(string user, int op)
 				{
 					CStatements(op);
 					cout << user << endl;
-					cout << endl << " (!) The re-entered password is not the same as created password. Please recreate password." << endl << endl;
+					cout << endl << " (?) The re-entered password is not the same as created password. Please recreate password." << endl << endl;
 					pass = "";
 					apass = "";
 					goto Password;
@@ -345,6 +350,7 @@ RemovalProcess:
 		ofstream Worker("temp.txt", ofstream::app);
 		if (!Worker)
 		{
+			Title();
 			cout << " (!) Error: (temporary.txt) cannot be created." << endl;
 			Crash();
 		}
@@ -379,6 +385,7 @@ int accessAccount(string user, int op)
 	ifstream Secure("Security_Primer.txt");
 	if (!Secure)
 	{
+		Title();
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -404,7 +411,7 @@ int accessAccount(string user, int op)
 		}
 		else
 		{
-			cout << " (!) Access Denied. Please try again." << endl << endl;
+			cout << " (?) Access Denied. Please try again." << endl << endl;
 			return 1;
 		}
 	}
@@ -460,6 +467,7 @@ string securitypass(string user)
 	ifstream Finder("Security_Primer.txt");
 	if (!Finder)
 	{
+		Title();
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -472,6 +480,7 @@ string securitypass(string user)
 
 			if (Finder.fail())
 			{
+				Title();
 				cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
 				Crash();
 			}
@@ -496,6 +505,7 @@ void nameListAdd(string user, int op)
 	ofstream WorkerA("temporary.txt", ofstream::app);
 	if (!WorkerA)
 	{
+		Title();
 		cout << " (!) Error: (temporary.txt) cannot be created." << endl;
 		Crash();
 	}
@@ -525,6 +535,7 @@ void Mixer(string auser, string cpass)
 
 	if (!Worker)
 	{
+		Title();
 		cout << " (!) Error: (temp.txt) cannot be created." << endl;
 		Crash();
 	}
@@ -552,14 +563,16 @@ string Combiner(string auser)
 
 	if (!Readout)
 	{
-	cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
-	Crash();
+		Title();
+		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		Crash();
 	}
 
 	while (getline(Readout, line))
 	{
 		if (Readout.fail())
 		{
+			Title();
 			cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.\n";
 			Crash();
 		}
@@ -590,14 +603,16 @@ string nameReader(string user)
 	ifstream ReadoutA("nameList.txt");
 	if (!ReadoutA)
 	{
-	cout << " (!) Error 101: (nameList.txt) cannot be opened. \n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
-	Crash();
+		Title();
+		cout << " (!) Error 101: (nameList.txt) cannot be opened. \n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
+		Crash();
 	}
 
 	while (getline(ReadoutA, line))
 	{
 		if (ReadoutA.fail())
 		{
+			Title();
 			cout << " (!) Error 101: (nameList.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.\n";
 			Crash();
 		}
