@@ -28,6 +28,7 @@ void CStatements(int op);
 void Crash();
 void Title();
 int RNG();
+void menu();
 
 int main()
 {
@@ -68,12 +69,7 @@ string Security()
 	Title();
 
 Choices:
-	cout << " 1. Sign In." << endl
-		<< " 2. Create account." << endl
-		<< " 3. Remove account." << endl
-		<< " 4. Change password." << endl
-		<< " 5. View Leaderboard." << endl << endl
-		<< " Please Enter your choice to continue: ";
+	menu();
 	choice = UserInput(op);
 
 	Title();
@@ -222,7 +218,7 @@ int createAccount(string user, int op)
 			if (Secure.fail())
 			{
 				Title();
-				cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.\n";
+				cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
 				Crash();
 			}
 		}
@@ -428,7 +424,7 @@ ChangeProcess:
 	{
 		op = 5;
 		Title();
-		cout << " Username: " << user << "\n\nPlease Enter your new password below.\n(Press ESC key to return to main menu.)\n\nNew ";
+		cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New ";
 		
 		pass = PassInput(user, op);
 
@@ -573,7 +569,7 @@ string Combiner(string auser)
 		if (Readout.fail())
 		{
 			Title();
-			cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.\n";
+			cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
 			Crash();
 		}
 
@@ -613,7 +609,7 @@ string nameReader(string user)
 		if (ReadoutA.fail())
 		{
 			Title();
-			cout << " (!) Error 101: (nameList.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.\n";
+			cout << " (!) Error 101: (nameList.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
 			Crash();
 		}
 		else if (line.substr(0, user.size()) != user)
@@ -700,7 +696,7 @@ string PassInput(string user, int op)
 	Title();
 	if (op == 5) 
 	{
-		cout << " Username: " << user << "\n\nPlease Enter your new password below.\n(Press ESC key to return to main menu.)\n\nNew Password:";
+		cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New Password:";
 	}
 	else 
 	{
@@ -726,7 +722,7 @@ FirstPass:
 
 			if (op == 5)
 			{
-				cout << " Username: " << user << "\n\nPlease Enter your new password below.\n(Press ESC key to return to main menu.)\n\nNew Password:";
+				cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New Password:";
 			}
 			else
 			{
@@ -863,11 +859,16 @@ void CStatements(int op)
 	}
 	else if (op == 10)
 	{
-		cout << " 1. Sign In." << endl
-			<< " 2. Create account." << endl
-			<< " 3. Remove account." << endl
-			<< " 4. Change password." << endl
-			<< " 5. View Leaderboard." << endl << endl
-			<< " Please Enter your choice to continue: ";
+		menu();
 	}
+}
+
+void menu()
+{
+	cout << " 1. Sign In." << endl
+		<< " 2. Create account." << endl
+		<< " 3. Remove account." << endl
+		<< " 4. Change password." << endl
+		<< " 5. View Leaderboard." << endl << endl
+		<< " Please Enter your choice to continue: ";
 }
