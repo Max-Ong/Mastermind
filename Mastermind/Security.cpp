@@ -10,23 +10,24 @@
 using namespace std;
 
 string Security();
-int accessAccount(string user, int op);
-int createAccount(string user, int op);
-void removeAccount(string user, int op);
-void changePassword(string user, int op);
-void Mixer(string auser, string cpass);
-void nameListAdd(string user, int op);
-string PassInput(string user, int op);
+int accessAccount(string user, int op, int realc);
+int createAccount(string user, int op, int realc);
+void removeAccount(string user, int op, int realc);
+void changePassword(string user, int op, int realc);
+void Mixer(string auser, string cpass, int realc);
+void nameListAdd(string user, int op, int realc);
+string PassInput(string user, int op, int realc);
 string securityencoder(string user);
-string securitypass(string user);
-string nameReader(string user);
-string Combiner(string auser);
+string securitypass(string user, int realc);
+string nameReader(string user, int realc);
+string Combiner(string auser, int realc);
 string pinencoder(string pass);
 int passencoder(char subpass);
-string UserInput(int op);
+string UserInput(int op, int realc);
 void CStatements(int op);
+string identifier(int realc);
 void Crash();
-void Title();
+void Title(int realc);
 int RNG();
 void menu();
 
@@ -37,19 +38,28 @@ int main()
 }
 string Security()
 {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	int columns, rows;
+
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+
+	int realc = (columns - 26) / 2;
+
 	int x, op = 10;
 	string choice, user;
 
 	ifstream Secure("Security_Primer.txt"), nameList("nameList.txt");
 	if (!Secure)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 	else if (!nameList)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error 101: (nameList.txt) cannot be opened. \n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -57,7 +67,7 @@ string Security()
 	ofstream Tester("temp.txt");
 	if (!Tester)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error: (temp.txt) cannot be created." << endl;
 		Crash();
 	}
@@ -66,29 +76,29 @@ string Security()
 	nameList.close();
 	Tester.close();
 	remove("temp.txt");
-	Title();
+	Title(realc);
 
 Choices:
 	menu();
-	choice = UserInput(op);
+	choice = UserInput(op, realc);
 
-	Title();
+	Title(realc);
 	if (choice == "1")
 	{
 	Protocall:
 		int op = 2;
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput(op, realc);
 
 		if (user == "")
 		{
-			Title();
+			Title(realc);
 			goto Choices;
 		}
 
 		else
 		{
-			x = accessAccount(user, op);
+			x = accessAccount(user, op, realc);
 		}
 	}
 
@@ -97,17 +107,17 @@ Choices:
 	Creative:
 		int op = 0;
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput(op, realc);
 
 		if (user == "")
 		{
-			Title();
+			Title(realc);
 			goto Choices;
 		}
 
 		else
 		{
-			x = createAccount(user, op);
+			x = createAccount(user, op, realc);
 		}
 	}
 
@@ -115,17 +125,17 @@ Choices:
 	{
 		int op = 1;
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput(op, realc);
 
 		if (user == "")
 		{
-			Title();
+			Title(realc);
 			goto Choices;
 		}
 
 		else
 		{
-			removeAccount(user, op);
+			removeAccount(user, op, realc);
 			x = 2;
 		}
 	}
@@ -134,17 +144,17 @@ Choices:
 	{
 		int op = 3;
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput(op, realc);
 
 		if (user == "")
 		{
-			Title();
+			Title(realc);
 			goto Choices;
 		}
 
 		else
 		{
-			changePassword(user, op);
+			changePassword(user, op, realc);
 			x = 2;
 		}
 	}
@@ -155,7 +165,7 @@ Choices:
 
 		system("pause"); //replace this line with the display leaderboard function.
 
-		Title();
+		Title(realc);
 		goto Choices;
 	}
 
@@ -165,7 +175,7 @@ Choices:
 		goto Choices;
 	}
 
-	Title();
+	Title(realc);
 
 	if (x == 0)
 	{
@@ -195,14 +205,14 @@ Choices:
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-int createAccount(string user, int op)
+int createAccount(string user, int op, int realc)
 {
 	ifstream Secure("Security_Primer.txt");
 	string x, apass, pass, auser, y, cpass;
 
 	if (!Secure)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -217,7 +227,7 @@ int createAccount(string user, int op)
 
 			if (Secure.fail())
 			{
-				Title();
+				Title(realc);
 				cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
 				Crash();
 			}
@@ -229,7 +239,7 @@ int createAccount(string user, int op)
 		{
 		Password:
 
-			pass = PassInput(user, op);
+			pass = PassInput(user, op, realc);
 
 			if (pass == "")
 			{
@@ -256,7 +266,7 @@ int createAccount(string user, int op)
 				{
 					if (m != 0)
 					{
-						Title();
+						Title(realc);
 						apass.resize(m - 1);
 
 						CStatements(op);
@@ -294,7 +304,7 @@ int createAccount(string user, int op)
 					apass = "";
 				}
 
-				Title();
+				Title(realc);
 				if (apass == "")
 				{
 					return 2;
@@ -302,9 +312,9 @@ int createAccount(string user, int op)
 				else if (pass == apass)
 				{
 					cpass = pinencoder(pass);
-					Mixer(auser, cpass);
+					Mixer(auser, cpass, realc);
 
-					nameListAdd(user, op);
+					nameListAdd(user, op, realc);
 
 					cout << " Account created, please login at mainscreen to access your new account :)" << endl << endl;
 					system("pause");
@@ -330,23 +340,23 @@ int createAccount(string user, int op)
 	}
 }
 
-void removeAccount(string user, int op)
+void removeAccount(string user, int op, int realc)
 {
 	int r;
 	string auser;
 
 RemovalProcess:
-	r = accessAccount(user, op);
+	r = accessAccount(user, op, realc);
 	if (r == 0)
 	{
 		string filer;
 		auser = securityencoder(user);
-		filer = Combiner(auser);
+		filer = Combiner(auser, realc);
 
 		ofstream Worker("temp.txt", ofstream::app);
 		if (!Worker)
 		{
-			Title();
+			Title(realc);
 			cout << " (!) Error: (temporary.txt) cannot be created." << endl;
 			Crash();
 		}
@@ -357,7 +367,7 @@ RemovalProcess:
 		remove("Security_Primer.txt");
 		rename("temp.txt", "Security_Primer.txt");
 
-		nameListAdd(user, op);
+		nameListAdd(user, op, realc);
 
 		cout << " Account (user:  " << user << ") has been removed." << endl << endl;
 		system("pause");
@@ -365,7 +375,7 @@ RemovalProcess:
 	else if (r == 1)
 	{
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput(op, realc);
 
 		if (user != "")
 		{
@@ -374,14 +384,14 @@ RemovalProcess:
 	}
 }
 
-int accessAccount(string user, int op)
+int accessAccount(string user, int op, int realc)
 {
 	string apass, pass, cpass;
 
 	ifstream Secure("Security_Primer.txt");
 	if (!Secure)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -389,12 +399,12 @@ int accessAccount(string user, int op)
 	{
 		Secure.close();
 	
-		pass = PassInput(user, op);
+		pass = PassInput(user, op, realc);
 
-		Title();
+		Title(realc);
 
 		cpass = pinencoder(pass);
-		apass = securitypass(user);
+		apass = securitypass(user, realc);
 
 		if (pass == "")
 		{
@@ -413,29 +423,29 @@ int accessAccount(string user, int op)
 	}
 }
 
-void changePassword(string user, int op)
+void changePassword(string user, int op, int realc)
 {
 	int r;
 	string auser, pass = "";
 
 ChangeProcess:
-	r = accessAccount(user, op);
+	r = accessAccount(user, op, realc);
 	if (r == 0)
 	{
 		op = 5;
-		Title();
+		Title(realc);
 		cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New ";
 		
-		pass = PassInput(user, op);
+		pass = PassInput(user, op, realc);
 
 		if (pass != "")
 		{
 			string cpass = pinencoder(pass);
 
-			Title();
+			Title(realc);
 			auser = securityencoder(user);
 
-			Mixer(auser, cpass);
+			Mixer(auser, cpass, realc);
 
 			cout << " The password for the account (user:  " << user << ") has been changed." << endl << endl;
 			system("pause");
@@ -445,7 +455,7 @@ ChangeProcess:
 	else if (r == 1)
 	{
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput(op, realc);
 
 		if (user != "")
 		{
@@ -456,14 +466,14 @@ ChangeProcess:
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-string securitypass(string user)
+string securitypass(string user, int realc)
 {
 	string auser, y;
 	string apass;
 	ifstream Finder("Security_Primer.txt");
 	if (!Finder)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -476,7 +486,7 @@ string securitypass(string user)
 
 			if (Finder.fail())
 			{
-				Title();
+				Title(realc);
 				cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
 				Crash();
 			}
@@ -493,15 +503,15 @@ string securitypass(string user)
 	}
 }
 
-void nameListAdd(string user, int op)
+void nameListAdd(string user, int op, int realc)
 {
 	string filer;
-	filer = nameReader(user);
+	filer = nameReader(user, realc);
 
 	ofstream WorkerA("temporary.txt", ofstream::app);
 	if (!WorkerA)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error: (temporary.txt) cannot be created." << endl;
 		Crash();
 	}
@@ -522,16 +532,16 @@ void nameListAdd(string user, int op)
 	}
 }
 
-void Mixer(string auser, string cpass) 
+void Mixer(string auser, string cpass, int realc) 
 {
 	int x;
 	string filer;
-	filer = Combiner(auser);
+	filer = Combiner(auser, realc);
 	ofstream Worker("temp.txt", ofstream::app);
 
 	if (!Worker)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error: (temp.txt) cannot be created." << endl;
 		Crash();
 	}
@@ -552,14 +562,14 @@ void Mixer(string auser, string cpass)
 	rename("temp.txt", "Security_Primer.txt");
 }
 
-string Combiner(string auser)
+string Combiner(string auser, int realc)
 {
 	ifstream Readout("Security_Primer.txt");
 	string filer = "", line;
 
 	if (!Readout)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -568,7 +578,7 @@ string Combiner(string auser)
 	{
 		if (Readout.fail())
 		{
-			Title();
+			Title(realc);
 			cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
 			Crash();
 		}
@@ -592,14 +602,14 @@ string Combiner(string auser)
 	return filer;
 }
 
-string nameReader(string user) 
+string nameReader(string user, int realc) 
 {
 	string filer = "", line;
 
 	ifstream ReadoutA("nameList.txt");
 	if (!ReadoutA)
 	{
-		Title();
+		Title(realc);
 		cout << " (!) Error 101: (nameList.txt) cannot be opened. \n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
@@ -608,7 +618,7 @@ string nameReader(string user)
 	{
 		if (ReadoutA.fail())
 		{
-			Title();
+			Title(realc);
 			cout << " (!) Error 101: (nameList.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
 			Crash();
 		}
@@ -623,13 +633,13 @@ string nameReader(string user)
 	return filer;
 }
 
-string UserInput(int op)
+string UserInput(int op, int realc)
 {
 	string user;
 	char ch;
 	ch = _getch();
 
-	Title();
+	Title(realc);
 	CStatements(op);
 
 FirstUser:
@@ -648,7 +658,7 @@ FirstUser:
 		{
 			user.resize(g - 1);
 
-			Title();
+			Title(realc);
 			CStatements(op);
 			cout << user;
 
@@ -684,7 +694,7 @@ FirstUser:
 	}
 }
 
-string PassInput(string user, int op)
+string PassInput(string user, int op, int realc)
 {
 	string pass;
 
@@ -693,7 +703,7 @@ string PassInput(string user, int op)
 	char ch;
 	ch = _getch();
 
-	Title();
+	Title(realc);
 	if (op == 5) 
 	{
 		cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New Password:";
@@ -717,7 +727,7 @@ FirstPass:
 	{
 		if (g != 0)
 		{
-			Title();
+			Title(realc);
 			pass.resize(g - 1);
 
 			if (op == 5)
@@ -825,10 +835,13 @@ void Crash()
 	exit(0);
 }
 
-void Title()
+void Title(int realc)
 {
+	string x = identifier(realc);
 	system("CLS");
-	cout << " =========== " << "[Security Menu]" << " =========== " << endl << endl;
+	cout << " " << x + ">|####################|<" + x << endl;
+	cout << " " << x << ">|## IMD Mastermind ##|<" << x << endl;
+	cout << " " << x + ">|####################|<" + x << endl << endl;
 }
 
 void CStatements(int op)
@@ -871,4 +884,14 @@ void menu()
 		<< " 4. Change password." << endl
 		<< " 5. View Leaderboard." << endl << endl
 		<< " Please Enter your choice to continue: ";
+}
+
+string identifier(int realc)
+{
+	string gg = "";
+	for (int x = 0; x < realc; x++) 
+	{
+		gg += '=';
+	}
+	return gg;
 }
