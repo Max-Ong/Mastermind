@@ -706,7 +706,7 @@ string PassInput(string user, int op, int realc)
 	Title(realc);
 	if (op == 5) 
 	{
-		cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New Password:";
+		cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New Password: ";
 	}
 	else 
 	{
@@ -732,7 +732,7 @@ FirstPass:
 
 			if (op == 5)
 			{
-				cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New Password:";
+				cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New Password: ";
 			}
 			else
 			{
