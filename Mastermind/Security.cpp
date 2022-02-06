@@ -54,13 +54,13 @@ string Security()
 	if (!Secure)
 	{
 		Title(realc);
-		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 	else if (!nameList)
 	{
 		Title(realc);
-		cout << " (!) Error 101: (nameList.txt) cannot be opened. \n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
+		cout << " (!) Error 101: (nameList.txt) cannot be opened.\n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 
@@ -213,7 +213,7 @@ int createAccount(string user, int op, int realc)
 	if (!Secure)
 	{
 		Title(realc);
-		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 
@@ -392,7 +392,7 @@ int accessAccount(string user, int op, int realc)
 	if (!Secure)
 	{
 		Title(realc);
-		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 	else
@@ -570,7 +570,7 @@ string Combiner(string auser, int realc)
 	if (!Readout)
 	{
 		Title(realc);
-		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened. \n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 
@@ -610,7 +610,7 @@ string nameReader(string user, int realc)
 	if (!ReadoutA)
 	{
 		Title(realc);
-		cout << " (!) Error 101: (nameList.txt) cannot be opened. \n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
+		cout << " (!) Error 101: (nameList.txt) cannot be opened.\n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 
