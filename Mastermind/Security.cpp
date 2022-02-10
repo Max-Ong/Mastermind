@@ -468,8 +468,7 @@ ChangeProcess:
 
 string securitypass(string user, int realc)
 {
-	string auser, y;
-	string apass;
+	string auser, y, apass;
 	ifstream Finder("Security_Primer.txt");
 	if (!Finder)
 	{
@@ -878,10 +877,11 @@ void CStatements(int op)
 
 void menu()
 {
-	cout << " 1. Sign In." << endl
-		<< " 2. Create account." << endl
-		<< " 3. Remove account." << endl
-		<< " 4. Change password." << endl
+	cout << " Choices: " << endl << endl
+		<< " 1. Sign In." << "\t"
+		<< " 2. Create account." << "\t"
+		<< " 3. Remove account." << "\t"
+		<< " 4. Change password." << "\t"
 		<< " 5. View Leaderboard." << endl << endl
 		<< " Please Enter your choice to continue: ";
 }
