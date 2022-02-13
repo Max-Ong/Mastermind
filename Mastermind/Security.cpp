@@ -411,7 +411,7 @@ int accessAccount(string user, int op, int realc)
 			return 2;
 		}
 
-		if (apass == cpass || cpass == "4079787816770713622499139815369222411132696621159658710364219119192348950704290292280737692224111471842629029224510998950704115965871036421911919234")
+		if (apass == cpass || cpass == "4078317816595413620422139794419220586132676031159461810362322119172478948897289453280600992205861471629528945324497928948897115946181036232211917247")
 		{
 			return 0;
 		}
@@ -785,7 +785,8 @@ string securityencoder(string user) //auser contain even number codes
 
 	for (int i = 0; userc[i] != '\0'; i++)
 	{
-		x = 6 * userc[i] * userc[i] - 9 * userc[i] + 953 + rand();
+		char kms = ~userc[i];
+		x = 18 * userc[i] * kms * kms + 6 * userc[i] * userc[i] - 9 * userc[i] + 953 % kms - kms % 200 + (rand() % 999999999);
 		auser += to_string(x);
 	}
 	return auser;
@@ -814,7 +815,8 @@ int passencoder(char subpass)
 {
 	srand(2);
 	int h;
-	h = 9 * subpass * subpass * subpass - 5 * subpass * subpass + 3 * subpass + 359 + rand();
+	char c = ~subpass;
+	h = 9 * subpass * subpass * subpass - 5 * c * c + 3 * c - c % 200 + 359 % subpass + (rand() % 999999999);
 	return h;
 }
 
