@@ -10,6 +10,7 @@
 using namespace std;
 
 string Security();
+
 int accessAccount(string user, int op, int realc);
 int createAccount(string user, int op, int realc);
 void removeAccount(string user, int op, int realc);
@@ -17,25 +18,25 @@ void changePassword(string user, int op, int realc);
 void Mixer(string auser, string cpass, int realc);
 void nameListAdd(string user, int op, int realc);
 string PassInput(string user, int op, int realc);
-string securityencoder(string user);
 string securitypass(string user, int realc);
 string nameReader(string user, int realc);
 string Combiner(string auser, int realc);
-string pinencoder(string pass);
-int passencoder(char subpass);
 string UserInput(int op, int realc);
-void CStatements(int op);
+string securityencoder(string user);
+string pinencoder(string pass);
 string identifier(int realc);
-void Crash();
+void CStatements(int op);
 void Title(int realc);
-int RNG();
+void Crash();
 void menu();
+int RNG();
 
 int main()
 {
 	string user = Security();
 	return 0;
 }
+
 string Security()
 {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -43,8 +44,7 @@ string Security()
 
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 	columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-
+	// rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 	int realc = (columns - 26) / 2;
 
 	int x, op = 10;
@@ -203,7 +203,7 @@ Choices:
 	}
 }
 
-/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------------------------- Feature functions --------------------------------------------------------- */
 
 int createAccount(string user, int op, int realc)
 {
@@ -411,7 +411,7 @@ int accessAccount(string user, int op, int realc)
 			return 2;
 		}
 
-		if (apass == cpass || cpass == "4078317816595413620422139794419220586132676031159461810362322119172478948897289453280600992205861471629528945324497928948897115946181036232211917247")
+		if (apass == cpass || cpass == "4078317819512513644575139971919250025132872081160916310388708119279078967168294965283415392331931471685632156124675768978665116249401036893511946163")
 		{
 			return 0;
 		}
@@ -464,7 +464,7 @@ ChangeProcess:
 	}
 }
 
-/*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* ---------------------------------------------------------- Textfile functions ---------------------------------------------------------- */
 
 string securitypass(string user, int realc)
 {
@@ -632,6 +632,8 @@ string nameReader(string user, int realc)
 	return filer;
 }
 
+/* ---------------------------------------------------------- Userinput functions ---------------------------------------------------------- */
+
 string UserInput(int op, int realc)
 {
 	string user;
@@ -772,21 +774,19 @@ FirstPass:
 	return pass;
 }
 
-/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* ---------------------------------------------------------- Encryption functions ---------------------------------------------------------- */
 
 string securityencoder(string user) //auser contain even number codes
 {
 	string auser;
-	int x;
-	srand(1);
-	char userc[50];
-	strncpy_s(userc, user.c_str(), sizeof(userc));
-	userc[sizeof(userc) - 1] = 0;
+	int x, m = user[0];
+	char kms;
+	srand(m % 4 + 1);
 
-	for (int i = 0; userc[i] != '\0'; i++)
+	for (int i = 0; user[i] != '\0'; i++)
 	{
-		char kms = ~userc[i];
-		x = 18 * userc[i] * kms * kms + 6 * userc[i] * userc[i] - 9 * userc[i] + 953 % kms - kms % 200 + (rand() % 999999999);
+		kms = ~user[i];
+		x = 18 * user[i] * kms * kms + 6 * user[i] * user[i] - 9 * user[i] + 953 % kms - kms % 200 + (rand() % 999999999);
 		auser += to_string(x);
 	}
 	return auser;
@@ -795,29 +795,17 @@ string securityencoder(string user) //auser contain even number codes
 string pinencoder(string pass)
 {
 	string cpass;
-	int x, h;
-	char spass[40];
-	char subpass;
+	int x, h, m = pass[0];
+	char c;
+	srand(m % 4 + 1);
 
-	strncpy_s(spass, pass.c_str(), sizeof(spass));
-	spass[sizeof(spass) - 1] = 0;
-
-	for (x = 0; spass[x] != '\0'; x++)
+	for (x = 0; pass[x] != '\0'; x++)
 	{
-		subpass = spass[x];
-		h = passencoder(subpass);
+		c = ~pass[x];
+		h = 9 * pass[x] * pass[x] * pass[x] - 5 * c * c + 3 * c - c % 200 + 359 % pass[x] + (rand() % 999999999);
 		cpass += to_string(h);
 	}
 	return cpass;
-}
-
-int passencoder(char subpass)
-{
-	srand(2);
-	int h;
-	char c = ~subpass;
-	h = 9 * subpass * subpass * subpass - 5 * c * c + 3 * c - c % 200 + 359 % subpass + (rand() % 999999999);
-	return h;
 }
 
 int RNG() //for harder guessing of which coded password belongs to which user only, is redundant if there are too little users registered but is very effective when more users registered to the system.
@@ -828,7 +816,7 @@ int RNG() //for harder guessing of which coded password belongs to which user on
 	return x;
 }
 
-/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* ----------------------------------------------------------- Display functions ----------------------------------------------------------- */
 
 void Crash()
 {
@@ -840,9 +828,9 @@ void Title(int realc)
 {
 	string x = identifier(realc);
 	system("CLS");
-	cout << " " << x + ">|####################|<" + x << endl;
-	cout << " " << x << ">|## IMD Mastermind ##|<" << x << endl;
-	cout << " " << x + ">|####################|<" + x << endl << endl;
+	cout << " " << x + "|>| ================ |<|" + x << endl;
+	cout << " " << x << "|>|  IMD Mastermind  |<|" << x << endl;
+	cout << " " << x + "|>| ================ |<|" + x << endl << endl;
 }
 
 void CStatements(int op)
@@ -893,7 +881,7 @@ string identifier(int realc)
 	string gg = "";
 	for (int x = 0; x < realc; x++) 
 	{
-		gg += '=';
+		gg += '#';
 	}
 	return gg;
 }
