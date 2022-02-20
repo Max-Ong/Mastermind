@@ -9,7 +9,7 @@
 #include <ctime>
 using namespace std;
 
-string Security();
+string Security(int realc);
 
 int accessAccount(string user, int op, int realc);
 int createAccount(string user, int op, int realc);
@@ -33,12 +33,6 @@ int RNG();
 
 int main()
 {
-	string user = Security();
-	return 0;
-}
-
-string Security()
-{
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	int columns, rows;
 
@@ -47,6 +41,13 @@ string Security()
 	// rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 	int realc = (columns - 26) / 2;
 
+	string user = Security(realc);
+
+	return 0;
+}
+
+string Security(int realc)
+{
 	int x, op = 10;
 	string choice, user;
 
@@ -785,7 +786,7 @@ string securityencoder(string user) //auser contain even number codes
 
 	for (int i = 0; user[i] != '\0'; i++)
 	{
-		kms = ~user[i];
+		kms = ~user[i]; // +1 in the eqn if u want to increase strength
 		x = 18 * user[i] * kms * kms + 6 * user[i] * user[i] - 9 * user[i] + 953 % kms - kms % 200 + (rand() % 999999999);
 		auser += to_string(x);
 	}
@@ -801,7 +802,7 @@ string pinencoder(string pass)
 
 	for (x = 0; pass[x] != '\0'; x++)
 	{
-		c = ~pass[x];
+		c = ~pass[x]; // +1 in the eqn if u want to increase strength
 		h = 9 * pass[x] * pass[x] * pass[x] - 5 * c * c + 3 * c - c % 200 + 359 % pass[x] + (rand() % 999999999);
 		cpass += to_string(h);
 	}
