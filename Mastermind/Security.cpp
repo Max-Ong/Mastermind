@@ -33,6 +33,8 @@ int RNG();
 
 int main()
 {
+	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -166,6 +168,48 @@ Choices:
 
 		Title(columns);
 		goto Choices;
+	}
+
+	else if (choice == "0") 
+	{
+		Title(columns);
+		int halves = (columns - 41) / 2;
+
+		cout << "\n\n\n\n\n\n\n\n";
+
+		for (int x = 0; x < halves; x++)
+		{
+			cout << " ";
+		}
+
+		cout << "Are you sure you wish to leave the game?" << endl << endl;
+
+		for (int x = 0; x < halves; x++)
+		{
+			cout << " ";
+		}
+
+		cout << "   Yes: press [1]       No: press [2]    " << endl << endl;
+
+		for (int x = 0; x < columns - 1; x++)
+		{
+			cout << " ";
+		}
+
+		char pick = _getch();
+
+		while (pick != '1' && pick != '2') 
+		{
+			pick = _getch();
+		}
+
+		if (pick == '1') {
+			exit(0);
+		}
+		else
+		{
+			x = 2;
+		}
 	}
 
 	else
@@ -872,7 +916,8 @@ void menu()
 		<< " 2. Create account." << "\t"
 		<< " 3. Remove account." << "\t"
 		<< " 4. Change password." << "\t"
-		<< " 5. View Leaderboard." << endl << endl
+		<< " 5. View Leaderboard." << "\t"
+		<< " 0. Exit." << endl << endl
 		<< " Please Enter your choice to continue: ";
 }
 
