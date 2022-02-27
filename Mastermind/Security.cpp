@@ -868,10 +868,10 @@ void CStatements(int op)
 void menu()
 {
 	cout << " Choices: " << endl << endl
-		<< " 1. Sign In." << "\t"
-		<< " 2. Create account." << "\t"
-		<< " 3. Remove account." << "\t"
-		<< " 4. Change password." << "\t"
+		<< " 1. Sign In." << "     "
+		<< " 2. Create account." << "     "
+		<< " 3. Remove account." << "     "
+		<< " 4. Change password." << "     "
 		<< " 5. View Leaderboard." << endl << endl
 		<< " (Press [ESC] or enter '0' if you wish to exit the game)" << endl << endl
 		<< " Please Enter your choice to continue: ";
@@ -911,7 +911,7 @@ void creditTitle(int rows, int columns)
 		cout << endl;
 		}
 	}
-	Sleep(2500);
+	Sleep(3000);
 	for (int n = 0; n < 4; n++)
 	{
 		for (int x = 0; x < rows; x++)
@@ -940,7 +940,7 @@ void creditTitle(int rows, int columns)
 				}
 				else 
 				{
-					cout << "  DARE/FT/1B/02 (GROUP5) PROUDLY PRESENTS:  ";
+					cout << "  DARE/FT/1B/02 [GROUP 5] PROUDLY PRESENTS  ";
 				}
 				backgrounder(columns);
 			}
@@ -952,23 +952,28 @@ void creditTitle(int rows, int columns)
 				}
 			}
 			cout << endl;
-			Sleep(25);
+			Sleep(1250 / rows);
 		}
-		Sleep(1750);
+		Sleep(2500);
 	}
 
 	for (int x = 0; x < rows - 1; x++)
 	{
-
-		for (int i = 0; i < column * 2; i++)
+		if (x == rows / 2) 
 		{
-			cout << " ";
+			for (int i = 0; i < (columns - 36) / 2; i++)
+			{
+				cout << " ";
+			}
+			cout << "The AY2021/2022 S2 Cprom CA2 project" << endl;
 		}
+		else
 		cout << endl;
-		Sleep(25);
+		Sleep(1250 / rows);
 	}
+	Sleep(3250);
 	system("CLS");
-	Sleep(750);
+	Sleep(1000);
 	columns = columns - 44;
 	for (int x = 0; x < rows - 1; x++)
 	{
@@ -1010,9 +1015,9 @@ void creditTitle(int rows, int columns)
 			}
 		}
 		cout << endl;
-		Sleep(12);
+		Sleep(500 / rows);
 	}
-	Sleep(1000);
+	Sleep(2000);
 	system("pause");
 	system("CLS");
 }
