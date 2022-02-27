@@ -173,11 +173,15 @@ Choices:
 	{
 		Title();
 
-		int q = 0;
-		int columns = columnsrows(q);
+		int columns = columnsrows(0);
+		int rows = columnsrows(1);
 		int halves = (columns - 41) / 2;
+		int r = (rows - 8) / 2;
 
-		cout << "\n\n\n\n\n\n\n\n\n\n";
+		for (x = 0; x < r; x++)
+		{
+			cout << endl;
+		}
 
 		for (int x = 0; x < halves; x++)
 		{
@@ -191,8 +195,12 @@ Choices:
 			cout << " ";
 		}
 
-		cout << "   Yes: press [1]       No: press [2]    " << endl << endl;
+		cout << "   Yes: press [1]       No: press [2]    " << endl;
 
+		for (x = 0; x < r; x++)
+		{
+			cout << endl;
+		}
 		for (int x = 0; x < columns - 1; x++)
 		{
 			cout << " ";
@@ -205,7 +213,9 @@ Choices:
 			pick = _getch();
 		}
 
-		if (pick == '1') {
+		if (pick == '1')
+		{
+			system("CLS");
 			exit(0);
 		}
 		else
@@ -1002,7 +1012,7 @@ void creditTitle(int rows, int columns)
 		cout << endl;
 		Sleep(12);
 	}
-
+	Sleep(1000);
 	system("pause");
 	system("CLS");
 }
