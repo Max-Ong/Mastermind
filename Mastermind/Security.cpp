@@ -18,10 +18,8 @@ int createAccount(string user, int op, int columns);
 void removeAccount(string user, int op, int columns);
 void changePassword(string user, int op, int columns);
 void Mixer(string auser, string cpass, int columns);
-void nameListAdd(string user, int op, int columns);
 string PassInput(string user, int op, int columns);
 string securitypass(string user, int columns);
-string nameReader(string user, int columns);
 string Combiner(string auser, int columns);
 string UserInput(int op, int columns);
 string securityencoder(string user);
@@ -360,7 +358,7 @@ int createAccount(string user, int op, int columns)
 					cpass = pinencoder(pass);
 					Mixer(auser, cpass, columns);
 
-					nameListAdd(user, op, columns);
+					// nameListAdd(user, op, columns);
 
 					cout << " Account created, please login at mainscreen to access your new account :)" << endl << endl;
 					system("pause");
@@ -413,7 +411,7 @@ RemovalProcess:
 		remove("Security_Primer.txt");
 		rename("temp.txt", "Security_Primer.txt");
 
-		nameListAdd(user, op, columns);
+		// nameListAdd(user, op, columns);
 
 		cout << " Account (user:  " << user << ") has been removed." << endl << endl;
 		system("pause");
@@ -548,35 +546,6 @@ string securitypass(string user, int columns)
 	}
 }
 
-void nameListAdd(string user, int op, int columns)
-{
-	string filer;
-	filer = nameReader(user, columns);
-
-	ofstream WorkerA("temporary.txt", ofstream::app);
-	if (!WorkerA)
-	{
-		Title(columns);
-		cout << " (!) Error: (temporary.txt) cannot be created." << endl;
-		Crash();
-	}
-	else
-	{
-		if (op == 0)
-		{
-			WorkerA << filer << endl << user;
-		}
-		else
-		{
-			WorkerA << filer;
-		}
-
-		WorkerA.close();
-		remove("nameList.txt");
-		rename("temporary.txt", "nameList.txt");
-	}
-}
-
 void Mixer(string auser, string cpass, int columns)
 {
 	int x;
@@ -642,37 +611,6 @@ string Combiner(string auser, int columns)
 		}
 	}
 	Readout.close();
-	int g = filer.size();
-	filer.resize(g - 1);
-	return filer;
-}
-
-string nameReader(string user, int columns)
-{
-	string filer = "", line;
-
-	ifstream ReadoutA("nameList.txt");
-	if (!ReadoutA)
-	{
-		Title(columns);
-		cout << " (!) Error 101: (nameList.txt) cannot be opened.\n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
-		Crash();
-	}
-
-	while (getline(ReadoutA, line))
-	{
-		if (ReadoutA.fail())
-		{
-			Title(columns);
-			cout << " (!) Error 101: (nameList.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
-			Crash();
-		}
-		else if (line.substr(0, user.size()) != user)
-		{
-			filer += line + '\n';
-		}
-	}
-
 	int g = filer.size();
 	filer.resize(g - 1);
 	return filer;
@@ -779,7 +717,9 @@ FirstPass:
 
 			if (op == 5)
 			{
-				cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New Password: ";
+				cout << " Username: " << user << endl << endl
+					<< " Please Enter your new password below." << endl
+					<< " (Press ESC key to return to main menu.)\n\n New Password: ";
 			}
 			else
 			{
@@ -937,15 +877,28 @@ string identifier(int realc)
 void creditTitle(int rows, int columns)
 {
 	int column = columns / 2;
+
 	for (int x = 0; x < rows - 1; x++)
 	{
-
-		for (int i = 0; i < column * 2; i++)
+		if (x == rows / 2)
 		{
-			cout << " ";
+			for (int i = 0; i < (columns - 84) / 2; i++)
+			{
+				cout << " ";
+			}
+			cout << " Credits to the software developers mentioned below for their active contributions: " << endl;
 		}
+
+		else
+		{
+			for (int i = 0; i < column * 2; i++)
+			{
+				cout << " ";
+			}
 		cout << endl;
+		}
 	}
+	Sleep(2000);
 	for (int n = 0; n < 4; n++)
 	{
 		for (int x = 0; x < rows; x++)
@@ -959,9 +912,10 @@ void creditTitle(int rows, int columns)
 			else if (x == rows / 2)
 			{
 				backgrounder(columns);
+				
 				if (n == 0)
 				{
-					cout << "            SECURITY: LANG WENBO            ";
+					cout << "        SECURITY SYSTEMS: LANG WENBO        ";
 				}
 				else if (n == 1)
 				{
@@ -973,7 +927,7 @@ void creditTitle(int rows, int columns)
 				}
 				else 
 				{
-					cout << "                 WELCOME TO                 ";
+					cout << "  DARE/FT/1B/02 (GROUP5) PROUDLY PRESENTS:  ";
 				}
 				backgrounder(columns);
 			}
@@ -985,9 +939,9 @@ void creditTitle(int rows, int columns)
 				}
 			}
 			cout << endl;
-			Sleep(50);
+			Sleep(30);
 		}
-		Sleep(2000);
+		Sleep(1500);
 	}
 
 	for (int x = 0; x < rows - 1; x++)
@@ -998,9 +952,10 @@ void creditTitle(int rows, int columns)
 			cout << " ";
 		}
 		cout << endl;
-		Sleep(50);
+		Sleep(30);
 	}
 	system("CLS");
+	Sleep(500);
 	columns = columns - 44;
 	for (int x = 0; x < rows - 1; x++)
 	{
@@ -1042,10 +997,10 @@ void creditTitle(int rows, int columns)
 			}
 		}
 		cout << endl;
-		Sleep(50);
+		Sleep(10);
 	}
 
-	Sleep(2500);
+	system("pause");
 	system("CLS");
 }
 
