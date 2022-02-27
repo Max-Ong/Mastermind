@@ -10,6 +10,8 @@
 using namespace std;
 
 string Security(int columns);
+void creditTitle(int rows, int columns);
+void backgrounder(int columns);
 
 int accessAccount(string user, int op, int columns);
 int createAccount(string user, int op, int columns);
@@ -41,6 +43,7 @@ int main()
 	int columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
 	int rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
+	creditTitle(rows, columns);
 	string user = Security(columns);
 
 	return 0;
@@ -175,7 +178,7 @@ Choices:
 		Title(columns);
 		int halves = (columns - 41) / 2;
 
-		cout << "\n\n\n\n\n\n\n\n";
+		cout << "\n\n\n\n\n\n\n\n\n\n";
 
 		for (int x = 0; x < halves; x++)
 		{
@@ -724,7 +727,7 @@ FirstUser:
 	{
 		if (op == 10)
 		{
-			return "5";
+			return "0";
 		}
 		else
 		{
@@ -916,8 +919,8 @@ void menu()
 		<< " 2. Create account." << "\t"
 		<< " 3. Remove account." << "\t"
 		<< " 4. Change password." << "\t"
-		<< " 5. View Leaderboard." << "\t"
-		<< " 0. Exit." << endl << endl
+		<< " 5. View Leaderboard." << endl << endl
+		<< " (Press [ESC] or enter '0' if you wish to exit the game)" << endl << endl
 		<< " Please Enter your choice to continue: ";
 }
 
@@ -929,4 +932,127 @@ string identifier(int realc)
 		gg += '#';
 	}
 	return gg;
+}
+
+void creditTitle(int rows, int columns)
+{
+	int column = columns / 2;
+	for (int x = 0; x < rows - 1; x++)
+	{
+
+		for (int i = 0; i < column * 2; i++)
+		{
+			cout << " ";
+		}
+		cout << endl;
+	}
+	for (int n = 0; n < 4; n++)
+	{
+		for (int x = 0; x < rows; x++)
+		{
+			if (x == rows / 2 - 1 || x == rows / 2 + 1)
+			{
+				backgrounder(columns);
+				cout << "                                            ";
+				backgrounder(columns);
+			}
+			else if (x == rows / 2)
+			{
+				backgrounder(columns);
+				if (n == 0)
+				{
+					cout << "            SECURITY: LANG WENBO            ";
+				}
+				else if (n == 1)
+				{
+					cout << "      GAME-LOGIC: TEJASWIN & DAVID LIU      ";
+				}
+				else if (n == 2)
+				{
+					cout << "    LEADERBOARD: MAX ONG JUN & HO YUN EN    ";
+				}
+				else 
+				{
+					cout << "                 WELCOME TO                 ";
+				}
+				backgrounder(columns);
+			}
+			else
+			{
+				for (int i = 0; i < column * 2; i++)
+				{
+					cout << ":";
+				}
+			}
+			cout << endl;
+			Sleep(50);
+		}
+		Sleep(2000);
+	}
+
+	for (int x = 0; x < rows - 1; x++)
+	{
+
+		for (int i = 0; i < column * 2; i++)
+		{
+			cout << " ";
+		}
+		cout << endl;
+		Sleep(50);
+	}
+	system("CLS");
+	columns = columns - 44;
+	for (int x = 0; x < rows - 1; x++)
+	{
+		if (x == rows / 2 - 3 || x == rows / 2 + 2)
+		{
+			backgrounder(columns);
+			cout << "                                                                                        ";
+			backgrounder(columns);
+		}
+		else if (x == rows / 2 - 2)
+		{
+			backgrounder(columns);
+			cout << "    _____ _____ ____     _____ _____ _____ _____ _____ _____ _____ _____ _____ ____     ";
+			backgrounder(columns);
+		}
+		else if (x == rows / 2 - 1)
+		{
+			backgrounder(columns);
+			cout << "   |     |     |    \\   |     |  _  |   __|_   _|   __| __  |     |     |   | |    \\    ";
+			backgrounder(columns);
+		}
+		else if (x == rows / 2)
+		{
+			backgrounder(columns);
+			cout << "   |-   -| | | |  | |   | | | |     |__   | | | |   __|    -| | | |-   -| | | |  | |    ";
+			backgrounder(columns);
+		}
+		else if (x == rows / 2 + 1)
+		{
+			backgrounder(columns);
+			cout << "   |_____|_|_|_|____/   |_|_|_|__|__|_____| |_| |_____|__|__|_|_|_|_____|_|___|____/    ";
+			backgrounder(columns);
+		}
+		else
+		{
+			for (int i = 0; i < column * 2; i++)
+			{
+				cout << ":";
+			}
+		}
+		cout << endl;
+		Sleep(50);
+	}
+
+	Sleep(2500);
+	system("CLS");
+}
+
+void backgrounder(int columns)
+{
+	for (int i = 0; i < (columns - 44) / 2; i++)
+	{
+		cout << ":";
+	}
 }
