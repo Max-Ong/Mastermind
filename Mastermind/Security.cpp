@@ -50,17 +50,11 @@ string Security()
 	int x, op = 10;
 	string choice, user;
 
-	ifstream Secure("Security_Primer.txt"), nameList("nameList.txt");
+	ifstream Secure("Security_Primer.txt");
 	if (!Secure)
 	{
 		Title();
 		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
-		Crash();
-	}
-	else if (!nameList)
-	{
-		Title();
-		cout << " (!) Error 101: (nameList.txt) cannot be opened.\n     Please ensure (nameList.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 
@@ -73,7 +67,6 @@ string Security()
 	}
 
 	Secure.close();
-	nameList.close();
 	Tester.close();
 	remove("temp.txt");
 	Title();
@@ -95,13 +88,11 @@ Choices:
 			Title();
 			goto Choices;
 		}
-
 		else
 		{
 			x = accessAccount(user, op);
 		}
 	}
-
 	else if (choice == "2")
 	{
 	Creative:
@@ -114,13 +105,11 @@ Choices:
 			Title();
 			goto Choices;
 		}
-
 		else
 		{
 			x = createAccount(user, op);
 		}
 	}
-
 	else if (choice == "3")
 	{
 		int op = 1;
@@ -132,14 +121,12 @@ Choices:
 			Title();
 			goto Choices;
 		}
-
 		else
 		{
 			removeAccount(user, op);
 			x = 2;
 		}
 	}
-
 	else if (choice == "4")
 	{
 		int op = 3;
@@ -151,14 +138,12 @@ Choices:
 			Title();
 			goto Choices;
 		}
-
 		else
 		{
 			changePassword(user, op);
 			x = 2;
 		}
 	}
-
 	else if (choice == "5") 
 	{
 		system("CLS");
@@ -168,46 +153,32 @@ Choices:
 		Title();
 		goto Choices;
 	}
-
 	else if (choice == "0") 
 	{
 		Title();
 
 		int columns = columnsrows(0);
 		int rows = columnsrows(1);
-		int halves = (columns - 41) / 2;
 		int r = (rows - 8) / 2;
 
-		for (x = 0; x < r; x++)
+		for (x = 0; x < (rows - rows % 2) / 2 - 6; x++)
 		{
 			cout << endl;
 		}
 
-		for (int x = 0; x < halves; x++)
-		{
-			cout << " ";
-		}
-
+		backgrounder((columns - 40) / 2 - 1, 1);
 		cout << "Are you sure you wish to leave the game?" << endl << endl;
+		backgrounder((columns - 40) / 2 - 1, 1);
+		cout << "   Yes: press [1]      No: press [2]    " << endl;
 
-		for (int x = 0; x < halves; x++)
-		{
-			cout << " ";
-		}
-
-		cout << "   Yes: press [1]       No: press [2]    " << endl;
-
-		for (x = 0; x < r; x++)
+		for (x = 0; x < (rows - rows % 2) / 2 - 1; x++)
 		{
 			cout << endl;
 		}
-		for (int x = 0; x < columns - 1; x++)
-		{
-			cout << " ";
-		}
+
+		backgrounder(columns - 1, 1);
 		
 		char pick = _getch();
-
 		while (pick != '1' && pick != '2') 
 		{
 			pick = _getch();
@@ -825,11 +796,11 @@ void Title()
 {
 	int columns = columnsrows(0);
 
-	int realc = (columns - 26) / 2;
+	int realc = (columns - 25) / 2;
 	string x = identifier(realc);
 	system("CLS");
 	cout << " " << x + "|>| ================ |<|" + x << endl;
-	cout << " " << x << "|>|  IMD MASTERMIND  |<|" << x << endl;
+	cout << " " << x + "|>|  IMD MASTERMIND  |<|" + x << endl;
 	cout << " " << x + "|>| ================ |<|" + x << endl << endl;
 }
 
