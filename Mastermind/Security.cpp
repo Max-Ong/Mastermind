@@ -147,7 +147,6 @@ Choices:
 	else if (choice == "5") 
 	{
 		system("CLS");
-
 		system("pause"); //replace this line with the display leaderboard function.
 
 		Title();
