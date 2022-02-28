@@ -11,7 +11,7 @@ using namespace std;
 
 string Security();
 void creditTitle(int rows, int columns);
-void backgrounder(int columns);
+void backgrounder(int jw, int type);
 int columnsrows(int q);
 
 int accessAccount(string user, int op);
@@ -38,8 +38,8 @@ int main()
 
 	int columns = columnsrows(0);
 	int rows = columnsrows(1);
-
 	creditTitle(rows, columns);
+
 	string user = Security();
 
 	return 0;
@@ -889,26 +889,18 @@ string identifier(int realc)
 
 void creditTitle(int rows, int columns)
 {
-	int column = columns / 2;
-
 	for (int x = 0; x < rows - 1; x++)
 	{
 		if (x == rows / 2)
 		{
-			for (int i = 0; i < (columns - 88) / 2; i++)
-			{
-				cout << " ";
-			}
+			backgrounder((columns - 88) / 2, 1);
 			cout << " Credits to the Students mentioned below for their active contributions to the project: " << endl;
 		}
 
 		else
 		{
-			for (int i = 0; i < column * 2; i++)
-			{
-				cout << " ";
-			}
-		cout << endl;
+			backgrounder(columns - columns % 2, 1);
+			cout << endl;
 		}
 	}
 	Sleep(3000);
@@ -918,13 +910,13 @@ void creditTitle(int rows, int columns)
 		{
 			if (x == rows / 2 - 1 || x == rows / 2 + 1)
 			{
-				backgrounder(columns);
+				backgrounder((columns - 44) / 2, 0);
 				cout << "                                            ";
-				backgrounder(columns);
+				backgrounder((columns - 44) / 2, 0);
 			}
 			else if (x == rows / 2)
 			{
-				backgrounder(columns);
+				backgrounder((columns - 44) / 2, 0);
 				
 				if (n == 0)
 				{
@@ -942,14 +934,11 @@ void creditTitle(int rows, int columns)
 				{
 					cout << "  DARE/FT/1B/02 [GROUP 5] PROUDLY PRESENTS  ";
 				}
-				backgrounder(columns);
+				backgrounder((columns - 44) / 2, 0);
 			}
 			else
 			{
-				for (int i = 0; i < column * 2; i++)
-				{
-					cout << ":";
-				}
+				backgrounder(columns - columns % 2, 0);
 			}
 			cout << endl;
 			Sleep(1250 / rows);
@@ -957,14 +946,11 @@ void creditTitle(int rows, int columns)
 		Sleep(2500);
 	}
 
-	for (int x = 0; x < rows - 1; x++)
+	for (int x = 0; x < rows; x++)
 	{
-		if (x == rows / 2) 
+		if (x == rows / 2 + 1)
 		{
-			for (int i = 0; i < (columns - 36) / 2; i++)
-			{
-				cout << " ";
-			}
+			backgrounder((columns - 36) / 2, 1);
 			cout << "The AY2021/2022 S2 Cprom CA2 project" << endl;
 		}
 		else
@@ -974,59 +960,65 @@ void creditTitle(int rows, int columns)
 	Sleep(3250);
 	system("CLS");
 	Sleep(1000);
-	columns = columns - 44;
 	for (int x = 0; x < rows - 1; x++)
 	{
 		if (x == rows / 2 - 3 || x == rows / 2 + 2)
 		{
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 			cout << "                                                                                        ";
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 		}
 		else if (x == rows / 2 - 2)
 		{
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 			cout << "    _____ _____ ____      _____ _____ _____ _____ _____ _____ _____ _____ _____ ____    ";
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 		}
 		else if (x == rows / 2 - 1)
 		{
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 			cout << "   |     |     |    \\    |     |  _  |   __|_   _|   __| __  |     |     |   | |    \\   ";
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 		}
 		else if (x == rows / 2)
 		{
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 			cout << "   |-   -| | | |  |  }   | | | |     |__   | | | |   __|    <| | | |-   -| | | |  |  }  ";
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 		}
 		else if (x == rows / 2 + 1)
 		{
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 			cout << "   |_____|_|_|_|____/    |_|_|_|__|__|_____| |_| |_____|__|__|_|_|_|_____|_|___|____/   ";
-			backgrounder(columns);
+			backgrounder((columns - 88) / 2, 0);
 		}
 		else
 		{
-			for (int i = 0; i < column * 2; i++)
-			{
-				cout << ":";
-			}
+			backgrounder(columns - columns % 2, 0);
 		}
 		cout << endl;
 		Sleep(500 / rows);
 	}
-	Sleep(2000);
+	Sleep(1500);
 	system("pause");
 	system("CLS");
 }
 
-void backgrounder(int columns)
+void backgrounder(int jw, int type)
 {
-	for (int i = 0; i < (columns - 44) / 2; i++)
+	if (type == 0)
 	{
-		cout << ":";
+		for (int i = 0; i < jw; i++)
+		{
+			cout << ":";
+		}
+	}
+	else
+	{
+		for (int i = 0; i < jw; i++)
+		{
+			cout << " ";
+		}
 	}
 }
 
