@@ -4,9 +4,13 @@
 #include <iomanip>
 #include <string>
 #include <cstring>
-#include <Windows.h>
 #include <conio.h>
 #include <ctime>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 using namespace std;
 
 string Security();
@@ -31,19 +35,6 @@ void Title();
 void Crash();
 void menu();
 int RNG();
-
-int main()
-{
-	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
-
-	int columns = columnsrows(0);
-	int rows = columnsrows(1);
-	creditTitle(rows, columns);
-
-	string user = Security();
-
-	return 0;
-}
 
 string Security()
 {

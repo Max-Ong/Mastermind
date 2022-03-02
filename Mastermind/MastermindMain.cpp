@@ -1,5 +1,16 @@
-#include "Security.h"
+#include <iostream>
+#include <string>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 using namespace std;
+
+int columnsrows(int q);
+void creditTitle(int rows, int columns);
+string Security();
+// gamelogic function declare;
 
 int main()
 {
@@ -10,6 +21,7 @@ int main()
 	creditTitle(rows, columns);
 
 	string user = Security();
+	// gamelogic function (string user);
 
 	return 0;
 }
