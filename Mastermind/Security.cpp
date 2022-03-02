@@ -40,12 +40,16 @@ string Security()
 {
 	int x, op = 10;
 	string choice, user;
-
+	int columns = columnsrows(0);
+	int rows = columnsrows(1);
 	ifstream Secure("Security_Primer.txt");
 	if (!Secure)
 	{
 		Title();
-		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		backgrounder((columns - 54) / 2, 1);
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened." << endl;
+		backgrounder((columns - 98) / 2, 1);
+		cout << "Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 
@@ -53,7 +57,8 @@ string Security()
 	if (!Tester)
 	{
 		Title();
-		cout << " (!) Error: (temp.txt) cannot be created." << endl;
+		backgrounder((columns - 42) / 2, 1);
+		cout << " (!) Error: (temp.txt) cannot be created. " << endl;
 		Crash();
 	}
 
@@ -146,9 +151,6 @@ Choices:
 	else if (choice == "0") 
 	{
 		Title();
-
-		int columns = columnsrows(0);
-		int rows = columnsrows(1);
 		int r = (rows - 8) / 2;
 
 		for (x = 0; x < (rows - rows % 2) / 2 - 6; x++)
@@ -187,7 +189,8 @@ Choices:
 
 	else
 	{
-		cout << " (?) Invalid choice entered, Please enter a valid choice." << endl << endl;
+		backgrounder((columns - 56) / 2, 1);
+		cout << "(?) Invalid choice entered, Please enter a valid choice." << endl << endl;
 		goto Choices;
 	}
 
@@ -195,7 +198,18 @@ Choices:
 
 	if (x == 0)
 	{
-		cout << " Access Granted. Welcome " << user << "." << endl;
+		for (x = 0; x < (rows - rows % 2) / 2 - 6; x++)
+		{
+			cout << endl;
+		}
+		backgrounder((columns - 22) / 2, 1);
+		cout << "[!] Access Granted [!]" << endl << endl;
+		backgrounder((columns - 9 - user.size()) / 2, 1);
+		cout << "Welcome: " << user << endl;
+		for (x = 0; x < (rows - rows % 2) / 2 - 1; x++)
+		{
+			cout << endl;
+		}
 		Sleep(4000);
 		system("CLS");
 		return user;
@@ -203,7 +217,8 @@ Choices:
 
 	else if (x == 1)
 	{
-		cout << " (?) Access Denied. Please try again." << endl << endl;
+		backgrounder((columns - 36) / 2, 1);
+		cout << "(?) Access Denied. Please try again." << endl << endl;
 		goto Protocall;
 	}
 
@@ -214,7 +229,8 @@ Choices:
 
 	else if (x == 3)
 	{
-		cout << " (?) This username has already been taken. Please use a different username." << endl << endl;
+		backgrounder((columns - 74) / 2, 1);
+		cout << "(?) This username has already been taken. Please use a different username." << endl << endl;
 		goto Creative;
 	}
 }
@@ -225,11 +241,15 @@ int createAccount(string user, int op)
 {
 	ifstream Secure("Security_Primer.txt");
 	string x, apass, pass, auser, y, cpass;
+	int columns = columnsrows(0);
 
 	if (!Secure)
 	{
 		Title();
-		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		backgrounder((columns - 54) / 2, 1);
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened." << endl;
+		backgrounder((columns - 98) / 2, 1);
+		cout << "Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 
@@ -244,7 +264,10 @@ int createAccount(string user, int op)
 			if (Secure.fail())
 			{
 				Title();
-				cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
+				backgrounder((columns - 60) / 2, 1);
+				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes." << endl;
+				backgrounder((columns - 72) / 2, 1);
+				cout << "Please close and reopen this project after this issue has been resolved.";
 				Crash();
 			}
 		}
@@ -254,7 +277,6 @@ int createAccount(string user, int op)
 		if (y != auser)
 		{
 		Password:
-
 			pass = PassInput(user, op);
 
 			if (pass == "")
@@ -265,7 +287,8 @@ int createAccount(string user, int op)
 
 			else
 			{
-				cout << " Confirm Password: ";
+				backgrounder((columns - 60) / 2, 1);
+				cout << "Confirm Password: ";
 				char cf;
 				cf = _getch();
 
@@ -282,25 +305,8 @@ int createAccount(string user, int op)
 				{
 					if (m != 0)
 					{
-						Title();
+						cout << "\b \b" << flush;
 						apass.resize(m - 1);
-
-						CStatements(op);
-						cout << user << endl;
-						cout << " Password: ";
-						int g = pass.size();
-
-						for (int i = 0; i < g; i++)
-						{
-							cout << '*';
-						}
-						cout << endl << " Confirm Password: ";
-
-						for (int i = 0; i < (m - 1); i++)
-						{
-							cout << '*';
-						}
-
 						cf = _getch();
 						goto SecondPass;
 					}
@@ -331,16 +337,20 @@ int createAccount(string user, int op)
 					Mixer(auser, cpass);
 
 					// nameListAdd(user, op, columns);
-
-					cout << " Account created, please login at mainscreen to access your new account :)" << endl << endl;
+					backgrounder((columns - 72) / 2, 1);
+					cout << "Account created, please login at mainscreen to access the new account :)" << endl << endl;
+					backgrounder((columns - 30) / 2, 1);
 					system("pause");
 					return 2;
 				}
 				else
 				{
 					CStatements(op);
-					cout << user << endl;
-					cout << endl << " (?) The re-entered password is not the same as created password. Please recreate password." << endl << endl;
+					cout << user << endl << endl;
+					backgrounder((columns - 60) / 2, 1);
+					cout << "(?) The re-entered password is not the same." << endl;
+					backgrounder((columns - 60) / 2, 1);
+					cout << "    Please recreate password." << endl << endl;
 					pass = "";
 					apass = "";
 					goto Password;
@@ -359,7 +369,8 @@ int createAccount(string user, int op)
 void removeAccount(string user, int op)
 {
 	int r;
-	string auser;
+	string auser; 
+	int columns = columnsrows(0);
 
 RemovalProcess:
 	r = accessAccount(user, op);
@@ -373,7 +384,8 @@ RemovalProcess:
 		if (!Worker)
 		{
 			Title();
-			cout << " (!) Error: (temporary.txt) cannot be created." << endl;
+			backgrounder((columns - 44) / 2, 1);
+			cout << "(!) Error: (temporary.txt) cannot be created" << endl;
 			Crash();
 		}
 
@@ -384,8 +396,9 @@ RemovalProcess:
 		rename("temp.txt", "Security_Primer.txt");
 
 		// nameListAdd(user, op, columns);
-
-		cout << " Account (user:  " << user << ") has been removed." << endl << endl;
+		backgrounder((columns - user.size() - 36) / 2, 1);
+		cout << "Account ( user: " << user << " ) has been removed." << endl << endl;
+		backgrounder((columns - 30) / 2, 1);
 		system("pause");
 	}
 	else if (r == 1)
@@ -403,12 +416,15 @@ RemovalProcess:
 int accessAccount(string user, int op)
 {
 	string apass, pass, cpass;
-
+	int columns = columnsrows(0);
 	ifstream Secure("Security_Primer.txt");
 	if (!Secure)
 	{
 		Title();
-		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		backgrounder((columns - 54) / 2, 1);
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened." << endl;
+		backgrounder((columns - 98) / 2, 1);
+		cout << "Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 	else
@@ -433,7 +449,8 @@ int accessAccount(string user, int op)
 		}
 		else
 		{
-			cout << " (?) Access Denied. Please try again." << endl << endl;
+			backgrounder((columns - 36) / 2, 1);
+			cout << "(?) Access Denied. Please try again." << endl << endl;
 			return 1;
 		}
 	}
@@ -443,6 +460,7 @@ void changePassword(string user, int op)
 {
 	int r;
 	string auser, pass = "";
+	int columns = columnsrows(0);
 
 ChangeProcess:
 	r = accessAccount(user, op);
@@ -450,7 +468,14 @@ ChangeProcess:
 	{
 		op = 5;
 		Title();
-		cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New";
+		backgrounder((columns - 10 - user.size()) / 2, 1);
+		cout << "Username: " << user << endl << endl;
+		backgrounder((columns - 36) / 2, 1);
+		cout << "Please Enter the new password below." << endl;
+		backgrounder((columns - 40) / 2, 1);
+		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 60) / 2, 1);
+		cout << "New";
 		
 		pass = PassInput(user, op);
 
@@ -462,8 +487,9 @@ ChangeProcess:
 			auser = securityencoder(user);
 
 			Mixer(auser, cpass);
-
-			cout << " The password for the account (user:  " << user << ") has been changed." << endl << endl;
+			backgrounder((columns - user.size() - 58) / 2, 1);
+			cout << "The password for this account ( user: " << user << " ) has been changed." << endl << endl;
+			backgrounder((columns - 30) / 2, 1);
 			system("pause");
 		}
 	}
@@ -484,12 +510,16 @@ ChangeProcess:
 
 string securitypass(string user)
 {
+	int columns = columnsrows(0);
 	string auser, y, apass;
 	ifstream Finder("Security_Primer.txt");
 	if (!Finder)
 	{
 		Title();
-		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		backgrounder((columns - 54) / 2, 1);
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened." << endl;
+		backgrounder((columns - 98) / 2, 1);
+		cout << "Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 	else
@@ -502,7 +532,10 @@ string securitypass(string user)
 			if (Finder.fail())
 			{
 				Title();
-				cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
+				backgrounder((columns - 60) / 2, 1);
+				cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes." << endl;
+				backgrounder((columns - 72) / 2, 1);
+				cout << "Please close and reopen this project after this issue has been resolved.";
 				Crash();
 			}
 		}
@@ -520,6 +553,7 @@ string securitypass(string user)
 
 void Mixer(string auser, string cpass)
 {
+	int columns = columnsrows(0);
 	int x;
 	string filer;
 	filer = Combiner(auser);
@@ -528,7 +562,8 @@ void Mixer(string auser, string cpass)
 	if (!Worker)
 	{
 		Title();
-		cout << " (!) Error: (temp.txt) cannot be created." << endl;
+		backgrounder((columns - 40) / 2, 1);
+		cout << "(!) Error: (temp.txt) cannot be created." << endl;
 		Crash();
 	}
 
@@ -550,13 +585,17 @@ void Mixer(string auser, string cpass)
 
 string Combiner(string auser)
 {
+	int columns = columnsrows(0);
 	ifstream Readout("Security_Primer.txt");
 	string filer = "", line;
 
 	if (!Readout)
 	{
 		Title();
-		cout << " (!) Error 101: (Security_Primer.txt) cannot be opened.\n     Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
+		backgrounder((columns - 54) / 2, 1);
+		cout << "(!) Error 101: (Security_Primer.txt) cannot be opened." << endl;
+		backgrounder((columns - 98) / 2, 1);
+		cout << "Please ensure (Security_Primer.txt) is downloaded and available to this project before continuing." << endl;
 		Crash();
 	}
 
@@ -565,7 +604,10 @@ string Combiner(string auser)
 		if (Readout.fail())
 		{
 			Title();
-			cout << " (!) Error 101: (Security_Primer.txt) contains invalid codes.\n     Please close and reopen this project after the issue has been resolved.";
+			backgrounder((columns - 60) / 2, 1);
+			cout << "(!) Error 101: (Security_Primer.txt) contains invalid codes." << endl;
+			backgrounder((columns - 72) / 2, 1);
+			cout << "Please close and reopen this project after this issue has been resolved.";
 			Crash();
 		}
 
@@ -595,7 +637,7 @@ string UserInput(int op)
 	string user;
 	char ch;
 	ch = _getch();
-
+	
 	Title();
 	CStatements(op);
 
@@ -614,10 +656,7 @@ FirstUser:
 		if (g != 0)
 		{
 			user.resize(g - 1);
-
-			Title();
-			CStatements(op);
-			cout << user;
+			cout << "\b \b" << flush;
 
 			ch = _getch();
 			goto FirstUser;
@@ -654,8 +693,17 @@ FirstUser:
 string PassInput(string user, int op)
 {
 	string pass;
+	int columns = columnsrows(0), qr;
 
-	cout << " Password: ";
+	if (op == 5) 
+	{
+		cout << " ";
+	}
+	else
+	{
+		backgrounder((columns - 60) / 2, 1);
+	}
+	cout << "Password: ";
 
 	char ch;
 	ch = _getch();
@@ -663,12 +711,21 @@ string PassInput(string user, int op)
 	Title();
 	if (op == 5) 
 	{
-		cout << " Username: " << user << "\n\n Please Enter your new password below.\n (Press ESC key to return to main menu.)\n\n New Password: ";
+		backgrounder((columns - 10 - user.size()) / 2, 1);
+		cout << "Username: " << user << endl << endl;
+		backgrounder((columns - 36) / 2, 1);
+		cout << "Please Enter the new password below." << endl;
+		backgrounder((columns - 40) / 2, 1);
+		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 60) / 2, 1);
+		cout << "New Password: ";
 	}
 	else 
 	{
 		CStatements(op);
-		cout << user << endl << " Password: ";
+		cout << user << endl;
+		backgrounder((columns - 60) / 2, 1);
+		cout << "Password: ";
 	}
 
 FirstPass:
@@ -684,25 +741,8 @@ FirstPass:
 	{
 		if (g != 0)
 		{
-			Title();
 			pass.resize(g - 1);
-
-			if (op == 5)
-			{
-				cout << " Username: " << user << endl << endl
-					<< " Please Enter your new password below." << endl
-					<< " (Press ESC key to return to main menu.)\n\n New Password: ";
-			}
-			else
-			{
-				CStatements(op);
-				cout << user << endl << " Password: ";
-			}
-
-			for (int i = 0; i < (g - 1); i++)
-			{
-				cout << '*';
-			}
+			cout << "\b \b" << flush;
 
 			ch = _getch();
 			goto FirstPass;
@@ -778,6 +818,8 @@ int RNG() //for harder guessing of which coded password belongs to which user on
 
 void Crash()
 {
+	int columns = columnsrows(0);
+	backgrounder((columns - 30) / 2, 1);
 	system("pause");
 	exit(0);
 }
@@ -796,29 +838,42 @@ void Title()
 
 void CStatements(int op)
 {
+	int columns = columnsrows(0);
 	if (op == 0)
 	{
-		cout << " Please enter the username and password for your new account." << endl
-			<< " (Press ESC key to return to main menu.)" << endl << endl
-			<< " Username: ";
+		backgrounder((columns - 60) / 2, 1);
+		cout << "Please enter the username and password for your new account." << endl;
+		backgrounder((columns - 40) / 2, 1);
+		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 60) / 2, 1);
+		cout << "Username: ";
 	}
 	else if (op == 1)
 	{
-		cout << " Please enter the username and password for the account that you wish to remove." << endl
-			<< " (Press ESC key to return to main menu.)" << endl << endl
-			<< " Username: ";
+		backgrounder((columns - 78) / 2, 1);
+		cout << "Please enter the username and password of the account that you wish to remove." << endl;
+		backgrounder((columns - 40) / 2, 1);
+		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 60) / 2, 1);
+		cout << "Username: ";
 	}
 	else if (op == 2)
 	{
-		cout << " Please enter the username and password for the account you wish to access." << endl
-			<< " (Press ESC key to return to main menu.)" << endl << endl
-			<< " Username: ";
+		backgrounder((columns - 74) / 2, 1);
+		cout << "Please enter the username and password for the account you wish to access." << endl;
+		backgrounder((columns - 40) / 2, 1);
+		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 60) / 2, 1);
+		cout << "Username: ";
 	}
 	else if (op == 3)
 	{
-		cout << " Please enter the username and password for the account you wish to change the password of." << endl
-			<< " (Press ESC key to return to main menu.)" << endl << endl
-			<< " Username: ";
+		backgrounder((columns - 90) / 2, 1);
+		cout << "Please enter the username and password for the account you wish to change the password of." << endl;
+		backgrounder((columns - 40) / 2, 1);
+		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 60) / 2, 1);
+		cout << "Username: ";
 	}
 	else if (op == 10)
 	{
@@ -828,14 +883,19 @@ void CStatements(int op)
 
 void menu()
 {
-	cout << " Choices: " << endl << endl
-		<< " 1. Sign In." << "     "
-		<< " 2. Create account." << "     "
-		<< " 3. Remove account." << "     "
-		<< " 4. Change password." << "     "
-		<< " 5. View Leaderboard." << endl << endl
-		<< " (Press [ESC] or enter '0' if you wish to exit the game)" << endl << endl
-		<< " Please Enter your choice to continue: ";
+	int columns = columnsrows(0);
+	backgrounder((columns - 106) / 2, 1);
+	cout << "  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Security Options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  " << endl << endl;
+	backgrounder((columns - 106) / 2, 1);
+	cout << "1. Sign In." << "     "
+		<< "2. Create account." << "     "
+		<< "3. Remove account." << "     "
+		<< "4. Change password." << "     "
+		<< "5. View Leaderboard." << endl << endl;
+	backgrounder((columns - 44) / 2, 1);
+	cout << "(Press [ESC] or enter '0' to exit this game)" << endl << endl;
+	backgrounder((columns - 36) / 2, 1);
+	cout << "Please Enter choice to continue: ";
 }
 
 string identifier(int realc)
@@ -982,6 +1042,8 @@ void backgrounder(int jw, int type)
 		}
 	}
 }
+
+/* ------------------------------------------------------------ Screen functions ------------------------------------------------------------ */
 
 int columnsrows(int q)
 {
