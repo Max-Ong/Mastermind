@@ -18,7 +18,7 @@ int main()
 
 	int columns = columnsrows(0);
 	int rows = columnsrows(1);
-	creditTitle(rows, columns);
+	//creditTitle(rows, columns);
 
 	string user = Security();
 	// gamelogic function (string user);
