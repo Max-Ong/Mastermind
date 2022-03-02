@@ -37,8 +37,9 @@ int RNG();
 
 string Security()
 {
-	int x, op = 10;
-	string choice, user;
+	int x, op = 10, r = 0, q;
+	char choice, ch;
+	string user, num;
 	int columns = columnsrows(0);
 	int rows = columnsrows(1);
 	ifstream Secure("Security_Primer.txt");
@@ -68,10 +69,43 @@ string Security()
 
 Choices:
 	menu();
-	choice = UserInput(op);
+	while (r < 2)
+	{
+		ch = _getch();
+		q = ch - 48;
+
+		if (ch == 8 && r != 0)
+		{
+			num.resize(r - 1);
+			cout << "\b \b" << flush;
+		}
+		else if (ch == 27) 
+		{
+			num = "0 ";
+		}
+		else if (r < 1 && q == 0)
+		{
+			num.push_back(ch);
+			cout << ch;
+		}
+		else if (r < 1 && q >= 1 && q <= 5)
+		{
+			num.push_back(ch);
+			cout << ch;
+		}
+		else if (r == 1 && ch == 13)
+		{
+			num += ' ';
+			cout << endl;
+		}
+		r = num.size();
+	}
+	choice = num[0];
+	num = "";
+	r = 0;
 
 	Title();
-	if (choice == "1")
+	if (choice == '1')
 	{
 	Protocall:
 		int op = 2;
@@ -88,7 +122,7 @@ Choices:
 			x = accessAccount(user, op);
 		}
 	}
-	else if (choice == "2")
+	else if (choice == '2')
 	{
 	Creative:
 		int op = 0;
@@ -105,7 +139,7 @@ Choices:
 			x = createAccount(user, op);
 		}
 	}
-	else if (choice == "3")
+	else if (choice == '3')
 	{
 		int op = 1;
 		CStatements(op);
@@ -122,7 +156,7 @@ Choices:
 			x = 2;
 		}
 	}
-	else if (choice == "4")
+	else if (choice == '4')
 	{
 		int op = 3;
 		CStatements(op);
@@ -139,7 +173,7 @@ Choices:
 			x = 2;
 		}
 	}
-	else if (choice == "5") 
+	else if (choice == '5') 
 	{
 		system("CLS");
 		system("pause"); //replace this line with the display leaderboard function.
@@ -147,7 +181,7 @@ Choices:
 		Title();
 		goto Choices;
 	}
-	else if (choice == "0") 
+	else if (choice == '0') 
 	{
 		Title();
 		int r = (rows - 8) / 2;
@@ -636,6 +670,7 @@ string UserInput(int op)
 	string user;
 	char ch;
 	ch = _getch();
+	int g;
 	
 	Title();
 	CStatements(op);
@@ -648,7 +683,7 @@ FirstUser:
 		ch = _getch();
 	}
 
-	int g = user.size();
+	g = user.size();
 
 	if (ch == 8)
 	{
@@ -673,14 +708,7 @@ FirstUser:
 	}
 	else if (ch == 27)
 	{
-		if (op == 10)
-		{
-			return "0";
-		}
-		else
-		{
 			return "";
-		}
 	}
 	else
 	{
