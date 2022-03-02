@@ -13,7 +13,6 @@
 #endif
 using namespace std;
 
-string Security();
 void creditTitle(int rows, int columns);
 void backgrounder(int jw, int type);
 int columnsrows(int q);
