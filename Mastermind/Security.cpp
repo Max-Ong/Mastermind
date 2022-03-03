@@ -14,6 +14,10 @@
 #endif
 using namespace std;
 
+void podium();
+void addUser(string user);
+void removeUser(string user);
+void leaderboard();
 void creditTitle(int rows, int columns);
 void backgrounder(int jw, int type);
 int columnsrows(int q);
@@ -67,7 +71,7 @@ string Security()
 	Tester.close();
 	remove("temp.txt");
 	Title();
-
+	podium();
 Choices:
 	menu();
 	while (r < 2)
@@ -110,12 +114,14 @@ Choices:
 	{
 	Protocall:
 		int op = 2;
+		podium();
 		CStatements(op);
 		user = UserInput();
 
 		if (user == "")
 		{
 			Title();
+			podium();
 			goto Choices;
 		}
 		else
@@ -127,12 +133,14 @@ Choices:
 	{
 	Creative:
 		int op = 0;
+		podium();
 		CStatements(op);
 		user = UserInput();
 
 		if (user == "")
 		{
 			Title();
+			podium();
 			goto Choices;
 		}
 		else
@@ -143,12 +151,14 @@ Choices:
 	else if (choice == '3')
 	{
 		int op = 1;
+		podium();
 		CStatements(op);
 		user = UserInput();
 
 		if (user == "")
 		{
 			Title();
+			podium();
 			goto Choices;
 		}
 		else
@@ -160,12 +170,14 @@ Choices:
 	else if (choice == '4')
 	{
 		int op = 3;
+		podium();
 		CStatements(op);
 		user = UserInput();
 
 		if (user == "")
 		{
 			Title();
+			podium();
 			goto Choices;
 		}
 		else
@@ -177,9 +189,11 @@ Choices:
 	else if (choice == '5') 
 	{
 		system("CLS");
-		system("pause"); //replace this line with the display leaderboard function.
+		leaderboard();
+		system("pause");
 
 		Title();
+		podium();
 		goto Choices;
 	}
 	else if (choice == '0') 
@@ -251,6 +265,7 @@ Choices:
 
 	else if (x == 1)
 	{
+		podium();
 		backgrounder((columns - 36) / 2, 1);
 		cout << "(?) Access Denied. Please try again." << endl << endl;
 		goto Protocall;
@@ -258,11 +273,13 @@ Choices:
 
 	else if (x == 2)
 	{
+		podium();
 		goto Choices;
 	}
 
 	else if (x == 3)
 	{
+		podium();
 		backgrounder((columns - 74) / 2, 1);
 		cout << "(?) This username has already been taken. Please use a different username." << endl << endl;
 		goto Creative;
@@ -362,6 +379,7 @@ int createAccount(string user, int op)
 				}
 
 				Title();
+				podium();
 				if (apass == "")
 				{
 					return 2;
@@ -371,7 +389,7 @@ int createAccount(string user, int op)
 					cpass = pinencoder(pass);
 					Mixer(auser, cpass);
 
-					// nameListAdd(user, op, columns);
+					addUser(user);
 					backgrounder((columns - 72) / 2, 1);
 					cout << "Account created, please login at mainscreen to access the new account :)" << endl << endl;
 					backgrounder((columns - 30) / 2, 1);
@@ -430,7 +448,7 @@ RemovalProcess:
 		remove("Security_Primer.txt");
 		rename("temp.txt", "Security_Primer.txt");
 
-		// nameListAdd(user, op, columns);
+		removeUser(user);
 		backgrounder((columns - user.size() - 36) / 2, 1);
 		cout << "Account ( user: " << user << " ) has been removed." << endl << endl;
 		backgrounder((columns - 30) / 2, 1);
@@ -469,6 +487,7 @@ int accessAccount(string user, int op)
 		pass = PassInput(user, op);
 
 		Title();
+		podium();
 
 		cpass = pinencoder(pass);
 		apass = securitypass(user);
@@ -503,6 +522,7 @@ ChangeProcess:
 	{
 		op = 5;
 		Title();
+		podium();
 		backgrounder((columns - 10 - user.size()) / 2, 1);
 		cout << "Username: " << user << endl << endl;
 		backgrounder((columns - 36) / 2, 1);
@@ -521,6 +541,7 @@ ChangeProcess:
 			string cpass = pinencoder(pass);
 
 			Title();
+			podium();
 			auser = securityencoder(user);
 
 			Mixer(auser, cpass);
