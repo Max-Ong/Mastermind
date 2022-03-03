@@ -1,3 +1,4 @@
+// MastermindMain.cpp is the file, this is a sub file.
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -29,7 +30,7 @@ string pinencoder(string pass);
 string Combiner(string auser);
 string identifier(int realc);
 void CStatements(int op);
-string UserInput(int op);
+string UserInput();
 void Title();
 void Crash();
 void menu();
@@ -110,7 +111,7 @@ Choices:
 	Protocall:
 		int op = 2;
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput();
 
 		if (user == "")
 		{
@@ -127,7 +128,7 @@ Choices:
 	Creative:
 		int op = 0;
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput();
 
 		if (user == "")
 		{
@@ -143,7 +144,7 @@ Choices:
 	{
 		int op = 1;
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput();
 
 		if (user == "")
 		{
@@ -160,7 +161,7 @@ Choices:
 	{
 		int op = 3;
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput();
 
 		if (user == "")
 		{
@@ -320,6 +321,7 @@ int createAccount(string user, int op)
 
 			else
 			{
+				cout << endl;
 				backgrounder((columns - 60) / 2, 1);
 				cout << "Confirm Password: ";
 				char cf;
@@ -437,7 +439,7 @@ RemovalProcess:
 	else if (r == 1)
 	{
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput();
 
 		if (user != "")
 		{
@@ -507,6 +509,8 @@ ChangeProcess:
 		cout << "Please Enter the new password below." << endl;
 		backgrounder((columns - 40) / 2, 1);
 		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 62) / 2, 1);
+		cout << "**************************************************************" << endl;
 		backgrounder((columns - 60) / 2, 1);
 		cout << "New";
 		
@@ -530,7 +534,7 @@ ChangeProcess:
 	else if (r == 1)
 	{
 		CStatements(op);
-		user = UserInput(op);
+		user = UserInput();
 
 		if (user != "")
 		{
@@ -665,15 +669,12 @@ string Combiner(string auser)
 
 /* ---------------------------------------------------------- Userinput functions ---------------------------------------------------------- */
 
-string UserInput(int op)
+string UserInput()
 {
 	string user;
 	char ch;
 	ch = _getch();
 	int g;
-	
-	Title();
-	CStatements(op);
 
 FirstUser:
 	while (ch != 13 && ch != 8 && ch != 27)
@@ -720,7 +721,7 @@ FirstUser:
 string PassInput(string user, int op)
 {
 	string pass;
-	int columns = columnsrows(0), qr;
+	int columns = columnsrows(0);
 
 	if (op == 5) 
 	{
@@ -734,26 +735,6 @@ string PassInput(string user, int op)
 
 	char ch;
 	ch = _getch();
-
-	Title();
-	if (op == 5) 
-	{
-		backgrounder((columns - 10 - user.size()) / 2, 1);
-		cout << "Username: " << user << endl << endl;
-		backgrounder((columns - 36) / 2, 1);
-		cout << "Please Enter the new password below." << endl;
-		backgrounder((columns - 40) / 2, 1);
-		cout << "( Press ESC key to return to main menu )" << endl << endl;
-		backgrounder((columns - 60) / 2, 1);
-		cout << "New Password: ";
-	}
-	else 
-	{
-		CStatements(op);
-		cout << user << endl;
-		backgrounder((columns - 60) / 2, 1);
-		cout << "Password: ";
-	}
 
 FirstPass:
 	while (ch != 13 && ch != 8 && ch != 27)
@@ -872,6 +853,8 @@ void CStatements(int op)
 		cout << "Please enter the username and password for your new account." << endl;
 		backgrounder((columns - 40) / 2, 1);
 		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 62) / 2, 1);
+		cout << "**************************************************************" << endl;
 		backgrounder((columns - 60) / 2, 1);
 		cout << "Username: ";
 	}
@@ -881,6 +864,8 @@ void CStatements(int op)
 		cout << "Please enter the username and password of the account that you wish to remove." << endl;
 		backgrounder((columns - 40) / 2, 1);
 		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 62) / 2, 1);
+		cout << "**************************************************************" << endl;
 		backgrounder((columns - 60) / 2, 1);
 		cout << "Username: ";
 	}
@@ -890,6 +875,8 @@ void CStatements(int op)
 		cout << "Please enter the username and password for the account you wish to access." << endl;
 		backgrounder((columns - 40) / 2, 1);
 		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 62) / 2, 1);
+		cout << "**************************************************************" << endl;
 		backgrounder((columns - 60) / 2, 1);
 		cout << "Username: ";
 	}
@@ -899,6 +886,8 @@ void CStatements(int op)
 		cout << "Please enter the username and password for the account you wish to change the password of." << endl;
 		backgrounder((columns - 40) / 2, 1);
 		cout << "( Press ESC key to return to main menu )" << endl << endl;
+		backgrounder((columns - 62) / 2, 1);
+		cout << "**************************************************************" << endl;
 		backgrounder((columns - 60) / 2, 1);
 		cout << "Username: ";
 	}
@@ -1084,7 +1073,7 @@ int columnsrows(int q)
 	{
 		return columns;
 	}
-	else if (q == 1)
+	else
 	{
 		return rows;
 	}

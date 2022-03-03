@@ -10,7 +10,7 @@ using namespace std;
 int columnsrows(int q);
 void creditTitle(int rows, int columns);
 string Security();
-// gamelogic function declare;
+void mainmenu(string);
 
 int main()
 {
@@ -20,8 +20,10 @@ int main()
 	int rows = columnsrows(1);
 	creditTitle(rows, columns);
 
+loger:
 	string user = Security();
-	// gamelogic function (string user);
+	mainmenu(user);
+	goto loger;
 
 	return 0;
 }
